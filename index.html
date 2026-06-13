@@ -1,94 +1,96 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dolly Ramella | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dolly Ramella | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="logo">DR</div>
-        <button class="menu-toggle" aria-label="Ouvrir le menu">
-            <i class="fas fa-bars"></i>
-        </button>
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#skills">Compétences</a></li>
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <h2 class="logo">Dolly Ramella</h2>
+      <ul>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#experience">Expériences</a></li>
+        <li><a href="#projects">Projets</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Ingénieure pédagogique numérique</h1>
+        <h2>Cheffe de projet e-learning &amp; Doctorante</h2>
+        <p>Conception de dispositifs innovants, formation hybride, mondes virtuels et didactique des langues.</p>
+        <a href="#contact" class="btn">Me contacter</a>
+      </div>
+    </section>
+  </header>
 
-    <main>
-        <section id="hero" class="hero-section">
-            <div class="hero-content">
-                <h1>Bonjour, je suis <span>Dolly Ramella</span></h1>
-                <p>Développeuse / Créatrice passionnée par l'expérience utilisateur.</p>
-                <a href="#projects" class="btn-primary">Voir mes projets</a>
-            </div>
-        </section>
+  <section id="about">
+    <h2>À propos</h2>
+    <p>Je suis ingénieure de formation et ingénieure pédagogique numérique à Nantes Université. Doctorante au laboratoire LIDILE, mes travaux portent sur les liens entre corpus linguistiques, serious games et apprentissage des langues.</p>
+  </section>
 
-        <section id="about" class="about-section">
-            <h2>À propos de moi</h2>
-            <p>Présentation claire et concise de votre parcours, de vos motivations et de ce que vous pouvez apporter à un projet ou une entreprise.</p>
-        </section>
+  <section id="experience">
+    <h2>Expériences</h2>
+    <div class="card">
+      <span class="date">2025 - Aujourd'hui</span>
+      <h3>Ingénieure pédagogique numérique — Nantes Université</h3>
+      <p>Conception de formations hybrides, accompagnement des enseignants, gestion de projets numériques.</p>
+    </div>
+    <div class="card">
+      <span class="date">2021 - 2025</span>
+      <h3>Cheffe de projet numérique — Université Rennes 2</h3>
+      <p>Pilotage de projets innovants (programme AIR), environnements immersifs, dispositifs à distance.</p>
+    </div>
+  </section>
 
-        <section id="skills" class="skills-section">
-            <h2>Mes Compétences</h2>
-            <div class="skills-grid">
-                <div class="skill-card"><i class="fab fa-html5"></i> HTML5 / CSS3</div>
-                <div class="skill-card"><i class="fab fa-js"></i> JavaScript</div>
-                <div class="skill-card"><i class="fab fa-git-alt"></i> Git & GitHub</div>
-            </div>
-        </section>
+  <section id="projects">
+    <h2>Projets</h2>
+    <div class="project-card">
+      <h3>Rennes2D</h3>
+      <p>Monde virtuel sur WorkAdventure pour l'apprentissage des langues et les interactions à distance.</p>
+    </div>
+    <div class="project-card">
+      <h3>ESCAPARA</h3>
+      <p>Escape game pédagogique numérique pour la révision de la parasitologie en pharmacie.</p>
+    </div>
+    <div class="project-card">
+      <h3>DECLAME'FLE</h3>
+      <p>MOOC en didactique des langues récompensé par le Label européen des langues 2023.</p>
+    </div>
+  </section>
 
-        <section id="projects" class="projects-section">
-            <h2>Mes Projets</h2>
-            <div class="projects-grid">
-                <article class="project-card">
-                    <img src="https://via.placeholder.com/350x200" alt="Aperçu du Projet 1">
-                    <div class="project-info">
-                        <h3>Nom du Projet 1</h3>
-                        <p>Description courte et impactante des technologies utilisées et du but du projet.</p>
-                        <a href="#" class="btn-secondary" target="_blank" rel="noopener noreferrer">Voir le site</a>
-                    </div>
-                </article>
-            </div>
-        </section>
+  <section id="skills">
+    <h2>Compétences</h2>
+    <div class="skills">
+      <span>Ingénierie pédagogique</span>
+      <span>Digital Learning</span>
+      <span>Gestion de projet</span>
+      <span>Formation hybride</span>
+      <span>MOOC</span>
+      <span>LMS / Moodle</span>
+      <span>WorkAdventure</span>
+      <span>Articulate Storyline</span>
+      <span>Canva</span>
+      <span>IA générative</span>
+      <span>Recherche</span>
+    </div>
+  </section>
 
-        <section id="contact" class="contact-section">
-            <h2>Me Contacter</h2>
-            <form id="contact-form" action="https://formspree.io/f/votre_id" method="POST">
-                <div class="form-group">
-                    <label for="name">Nom</label>
-                    <input type="text" id="name" name="name" required placeholder="Votre nom">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="Votre adresse email">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" required placeholder="Votre message..."></textarea>
-                </div>
-                <button type="submit" class="btn-primary">Envoyer</button>
-                <p id="form-status"></p>
-            </form>
-        </section>
-    </main>
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>📧 dolly.ramella@univ-nantes.fr</p>
+  </section>
 
-    <footer>
-        <p>&copy; 2026 Dolly Ramella. Tous droits réservés.</p>
-        <div class="social-links">
-            <a href="https://github.com/DollyRamella" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-        </div>
-    </footer>
+  <footer>
+    <p>© 2026 Dolly Ramella</p>
+  </footer>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

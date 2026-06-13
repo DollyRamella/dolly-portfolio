@@ -422,8 +422,8 @@ img { max-width: 100%; }
 }
 
 .timeline-card {
-  background: rgba(247,244,238,0.06);
-  border: 1px solid rgba(247,244,238,1);
+  background: rgba(145,110,238,1);
+  border: 1px solid rgba(247,244,255,1);
   border-radius: var(--radius);
   padding: 1.5rem 1.8rem;
 }
@@ -434,7 +434,7 @@ img { max-width: 100%; }
 }
 .timeline-card p {
   font-size: 0.9rem;
-  color: rgba(247,244,238,1);
+  color: rgba(247,110,255,1);
   margin-top: 0.5rem;
 }
 

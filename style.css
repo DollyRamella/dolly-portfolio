@@ -394,7 +394,7 @@ img { max-width: 100%; }
   position: absolute;
   left: 0; top: 0; bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, var(--coral), var(--gold), rgba(201,169,110,0.1));
+  background: linear-gradient(to bottom, var(--coral), var(--gold), rgba(201,169,110,1));
 }
 
 .timeline-item {
@@ -410,7 +410,7 @@ img { max-width: 100%; }
   width: 10px; height: 10px;
   border-radius: 50%;
   background: var(--coral);
-  box-shadow: 0 0 0 3px rgba(232,97,74,0.3);
+  box-shadow: 0 0 0 3px rgba(232,97,74,1);
 }
 
 .timeline-date {
@@ -423,7 +423,7 @@ img { max-width: 100%; }
 
 .timeline-card {
   background: rgba(247,244,238,0.06);
-  border: 1px solid rgba(247,244,238,0.1);
+  border: 1px solid rgba(247,244,238,1);
   border-radius: var(--radius);
   padding: 1.5rem 1.8rem;
 }
@@ -455,9 +455,9 @@ img { max-width: 100%; }
   border-radius: 50px;
   margin-bottom: 0.8rem;
 }
-.timeline-tag.pro { background: rgba(232,97,74,0.2); color: var(--coral); }
-.timeline-tag.phd { background: rgba(201,169,110,0.2); color: var(--gold); }
-.timeline-tag.edu { background: rgba(74,85,104,0.3); color: #A0AEC0; }
+.timeline-tag.pro { background: rgba(232,97,74,0.8); color: var(--coral); }
+.timeline-tag.phd { background: rgba(201,169,110,0.8); color: var(--gold); }
+.timeline-tag.edu { background: rgba(74,85,104,0.8); color: #A0AEC0; }
 
 .timeline-link {
   display: inline-block;

@@ -208,7 +208,7 @@ img { max-width: 100%; }
 .btn-ghost {
   display: inline-block;
   padding: 0.85rem 2rem;
-  border: 1.5px solid rgba(247,244,238,0.3);
+  border: 1.5px solid rgba(0,0,0,1);
   color: var(--ivory);
   border-radius: 50px;
   font-weight: 500;
@@ -217,7 +217,7 @@ img { max-width: 100%; }
 }
 .btn-ghost:hover {
   border-color: var(--ivory);
-  background: rgba(247,244,238,0.1);
+  background: rgba(247,244,238,1);
 }
 
 .hero-tags {

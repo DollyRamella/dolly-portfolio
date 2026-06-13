@@ -295,7 +295,7 @@ img { max-width: 100%; }
   color: var(--ivory);
 }
 .section-dark h2, .section-dark h3 { color: var(--white); }
-.section-dark p { color: rgba(247,244,238,0.8); }
+.section-dark p { color: rgba(247,136,140,1); }
 
 .section-tinted { background: var(--ivory-dark); }
 

@@ -8,7 +8,7 @@ cat > /mnt/user-data/outputs/style.css << 'EOF'
    ============================================================ */
 
 :root {
-  --navy: #0F1B35;
+  --navy: #F3E6E1;
   --navy-light: #1A2D52;
   --ivory: #F7F4EE;
   --ivory-dark: #EDE9E1;

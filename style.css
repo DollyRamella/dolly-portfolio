@@ -481,7 +481,7 @@ img { max-width: 100%; }
 
 .project-card {
   background: var(--white);
-  border: 1px solid rgba(15,27,53,0.08);
+  border: 1px solid rgba(15,27,53,1);
   border-radius: var(--radius-lg);
   padding: 2rem;
   transition: transform var(--transition), box-shadow var(--transition);
@@ -579,7 +579,7 @@ img { max-width: 100%; }
 }
 .skills-constellation > p {
   font-size: 0.9rem;
-  color: rgba(247,244,238,0.65);
+  color: rgba(247,244,238,1);
   margin-bottom: 2rem;
 }
 
@@ -621,7 +621,7 @@ img { max-width: 100%; }
   font-size: 0.9rem;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 40px rgba(232,97,74,0.5);
+  box-shadow: 0 0 40px rgba(232,97,74,1);
   z-index: 5;
 }
 

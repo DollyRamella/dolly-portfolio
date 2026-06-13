@@ -1,94 +1,603 @@
+cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dolly Ramella | Portfolio</title>
+  <title>Dolly Ramella Georget | Portfolio</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <header>
-    <nav>
-      <h2 class="logo">Dolly Ramella</h2>
-      <ul>
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <span class="nav-logo">D·R·G</span>
+      <ul class="nav-links">
         <li><a href="#about">À propos</a></li>
-        <li><a href="#experience">Expériences</a></li>
+        <li><a href="#parcours">Parcours</a></li>
         <li><a href="#projects">Projets</a></li>
+        <li><a href="#research">Recherche</a></li>
         <li><a href="#skills">Compétences</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-    </nav>
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Ingénieure pédagogique numérique</h1>
-        <h2>Cheffe de projet e-learning &amp; Doctorante</h2>
-        <p>Conception de dispositifs innovants, formation hybride, mondes virtuels et didactique des langues.</p>
-        <a href="#contact" class="btn">Me contacter</a>
+      <button class="burger" id="burger" aria-label="Menu">&#9776;</button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="#about">À propos</a>
+      <a href="#parcours">Parcours</a>
+      <a href="#projects">Projets</a>
+      <a href="#research">Recherche</a>
+      <a href="#skills">Compétences</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Ingénieure pédagogique · Doctorante · Conceptrice</p>
+      <h1 class="hero-title">Dolly<br><em>Ramella Georget</em></h1>
+      <p class="hero-sub">Je conçois des dispositifs d'apprentissage innovants qui réunissent mondes virtuels, serious games, corpus linguistiques et formation hybride.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">Voir mes projets</a>
+        <a href="#contact" class="btn-ghost">Me contacter</a>
       </div>
-    </section>
+      <div class="hero-tags">
+        <span>🏆 Label européen des Langues 2023</span>
+        <span>🎓 LIDILE EA 3874</span>
+        <span>🌐 Nantes Université</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring ring-1"></div>
+      <div class="orbit-ring ring-2"></div>
+      <div class="orbit-ring ring-3"></div>
+      <div class="orbit-center">
+        <span>DRG</span>
+      </div>
+      <div class="orbit-dot dot-1">🎮</div>
+      <div class="orbit-dot dot-2">🌐</div>
+      <div class="orbit-dot dot-3">📚</div>
+      <div class="orbit-dot dot-4">🔬</div>
+    </div>
   </header>
 
-  <section id="about">
-    <h2>À propos</h2>
-    <p>Je suis ingénieure de formation et ingénieure pédagogique numérique à Nantes Université. Doctorante au laboratoire LIDILE, mes travaux portent sur les liens entre corpus linguistiques, serious games et apprentissage des langues.</p>
-  </section>
-
-  <section id="experience">
-    <h2>Expériences</h2>
-    <div class="card">
-      <span class="date">2025 - Aujourd'hui</span>
-      <h3>Ingénieure pédagogique numérique — Nantes Université</h3>
-      <p>Conception de formations hybrides, accompagnement des enseignants, gestion de projets numériques.</p>
-    </div>
-    <div class="card">
-      <span class="date">2021 - 2025</span>
-      <h3>Cheffe de projet numérique — Université Rennes 2</h3>
-      <p>Pilotage de projets innovants (programme AIR), environnements immersifs, dispositifs à distance.</p>
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2>Projets</h2>
-    <div class="project-card">
-      <h3>Rennes2D</h3>
-      <p>Monde virtuel sur WorkAdventure pour l'apprentissage des langues et les interactions à distance.</p>
-    </div>
-    <div class="project-card">
-      <h3>ESCAPARA</h3>
-      <p>Escape game pédagogique numérique pour la révision de la parasitologie en pharmacie.</p>
-    </div>
-    <div class="project-card">
-      <h3>DECLAME'FLE</h3>
-      <p>MOOC en didactique des langues récompensé par le Label européen des langues 2023.</p>
-    </div>
-  </section>
-
-  <section id="skills">
-    <h2>Compétences</h2>
-    <div class="skills">
-      <span>Ingénierie pédagogique</span>
-      <span>Digital Learning</span>
-      <span>Gestion de projet</span>
-      <span>Formation hybride</span>
-      <span>MOOC</span>
-      <span>LMS / Moodle</span>
-      <span>WorkAdventure</span>
-      <span>Articulate Storyline</span>
-      <span>Canva</span>
-      <span>IA générative</span>
-      <span>Recherche</span>
+  <!-- À PROPOS -->
+  <section id="about" class="section reveal">
+    <div class="container two-col">
+      <div class="about-text">
+        <p class="section-eyebrow">À propos</p>
+        <h2>Une approche à l'intersection du numérique et de la didactique</h2>
+        <p>Doctorante en linguistique et ingénierie didactique au laboratoire <strong>LIDILE EA 3874</strong> (Université Rennes 2), je suis également <strong>ingénieure de formation et cheffe de projet e-learning</strong> au Service Universitaire des Langues de <strong>Nantes Université</strong> depuis 2025.</p>
+        <p>Mes travaux de thèse portent sur : <em>« Du corpus linguistique au serious game : convergences méthodologiques et numériques pour la didactique des langues »</em>, sous la direction d'Élisabeth Richard.</p>
+        <p>J'interviens à l'interface de l'ingénierie pédagogique, des technologies immersives, de la gestion de projet et de la recherche en didactique des langues.</p>
+        <div class="about-langs">
+          <div class="lang-badge">🇦🇷 Espagnol — natif</div>
+          <div class="lang-badge">🇫🇷 Français — C2</div>
+          <div class="lang-badge">🇬🇧 Anglais — A1</div>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <span class="stat-num">7+</span>
+          <span class="stat-label">ans d'expérience</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">30+</span>
+          <span class="stat-label">communications scientifiques</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">5</span>
+          <span class="stat-label">pays de formation</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">1</span>
+          <span class="stat-label">label européen</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>📧 dolly.ramella@univ-nantes.fr</p>
+  <!-- PARCOURS -->
+  <section id="parcours" class="section section-dark reveal">
+    <div class="container">
+      <p class="section-eyebrow light">Parcours</p>
+      <h2>Expériences &amp; Formation</h2>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-date">2025 →</div>
+          <div class="timeline-card">
+            <span class="timeline-tag pro">Professionnel</span>
+            <h3>Ingénieure de formation &amp; Cheffe de projet e-learning</h3>
+            <p class="timeline-org">Service Universitaire des Langues (SUL) — Nantes Université</p>
+            <p>Conception et déploiement de formations hybrides et à distance, accompagnement des enseignants, pilotage de projets numériques innovants.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2022 – 2025</div>
+          <div class="timeline-card">
+            <span class="timeline-tag pro">Professionnel</span>
+            <h3>Cheffe de projet &amp; Ingénieure pédagogique numérique</h3>
+            <p class="timeline-org">Projet Espace des Langues (PIA4 - DEMOES) — Université Rennes 2</p>
+            <p>Pilotage du projet Espace des Langues, création d'environnements immersifs, développement de dispositifs d'apprentissage innovants, webmaster de plusieurs plateformes (lespacedeslangues, LIDILE, FLEscape…).</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2019 – 2022</div>
+          <div class="timeline-card">
+            <span class="timeline-tag pro">Professionnel</span>
+            <h3>Ingénieure pédagogique — Projet DECLAME'FLE</h3>
+            <p class="timeline-org">Projet Erasmus+ — Université Rennes 2</p>
+            <p>Conception pédagogique du projet et du MOOC « Enseigner la littérature en FLE ». Récompensé par le <strong>Label européen des Langues 2023</strong>.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2020 – 2022</div>
+          <div class="timeline-card">
+            <span class="timeline-tag pro">Professionnel</span>
+            <h3>Ingénieure pédagogique — Master Didactique des Langues</h3>
+            <p class="timeline-org">Université Rennes 2</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2018 – 2022</div>
+          <div class="timeline-card">
+            <span class="timeline-tag phd">Doctorat</span>
+            <h3>Doctorat en Linguistique — Ingénierie — Didactique des Langues</h3>
+            <p class="timeline-org">LIDILE EA 3874 — Université Rennes 2</p>
+            <p>Dir. Élisabeth Richard. Thèse : <em>« Du corpus linguistique au serious game : convergences méthodologiques et numériques pour la didactique des langues »</em></p>
+            <a href="http://www.theses.fr/s217113" target="_blank" class="timeline-link">↗ Voir sur theses.fr</a>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2017 – 2018</div>
+          <div class="timeline-card">
+            <span class="timeline-tag edu">Formation</span>
+            <h3>Master 2 Numérique et ingénierie pédagogique (NIpro) — Mention TB</h3>
+            <p class="timeline-org">Université Rennes 2</p>
+            <p>Mémoire : <em>« La compétence E-teaching en didactique de langues : du corpus aux sMOOC et Serious Games »</em></p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2015 – 2017</div>
+          <div class="timeline-card">
+            <span class="timeline-tag edu">Formation</span>
+            <h3>Master 2 Description et Innovation en Linguistique (DIL) — Mention TB</h3>
+            <p class="timeline-org">Université Rennes 2</p>
+            <p>Mémoire : <em>« Le jeu en cours de FLE »</em> — Création du jeu <a href="https://dollyfle.lgeorget.eu/maze/maze.html?lang=fr&level=1&skin=2" target="_blank">Blockly FLE</a></p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2009 – 2014</div>
+          <div class="timeline-card">
+            <span class="timeline-tag edu">Formation</span>
+            <h3>Professorat de FLE — Mention TB</h3>
+            <p class="timeline-org">Institut d'Enseignement Supérieur Lola Mora — Tucumán, Argentine</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETS -->
+  <section id="projects" class="section reveal">
+    <div class="container">
+      <p class="section-eyebrow">Projets phares</p>
+      <h2>Créations &amp; Réalisations</h2>
+      <p class="section-intro">Chaque projet mobilise un ensemble de compétences transversales. Les connexions ci-dessous illustrent les synergies entre projets et domaines d'expertise.</p>
+
+      <div class="projects-grid">
+
+        <div class="project-card" data-skills="mondes-virtuels,pedagogie,recherche,langues">
+          <div class="project-header">
+            <span class="project-icon">🌐</span>
+            <span class="project-year">2022–2025</span>
+          </div>
+          <h3>RENNES2D</h3>
+          <p class="project-type">Monde virtuel 2D — WorkAdventure</p>
+          <p>Création et développement d'un monde virtuel sur WorkAdventure pour l'apprentissage des langues, les interactions à distance et l'accueil d'événements pédagogiques internationaux. Étudié dans le cadre de la thèse comme corpus linguistique.</p>
+          <div class="project-skills">
+            <span class="ps ps-mondes">Mondes virtuels</span>
+            <span class="ps ps-ped">Ingénierie péd.</span>
+            <span class="ps ps-rech">Recherche</span>
+            <span class="ps ps-lang">Didactique des langues</span>
+          </div>
+          <a href="https://lespacedeslangues.univ-rennes2.fr" target="_blank" class="project-link">↗ Voir le projet</a>
+        </div>
+
+        <div class="project-card" data-skills="jeux,pedagogie,langues,numerique">
+          <div class="project-header">
+            <span class="project-icon">🔐</span>
+            <span class="project-year">2019–2025</span>
+          </div>
+          <h3>FLEscape</h3>
+          <p class="project-type">Learning Escape Game — FLE</p>
+          <p>Escape game pédagogique numérique pour l'enseignement du FLE en contexte universitaire. Présenté dans de nombreux colloques internationaux (France, Canada, Argentine, Bahreïn). Formation de formateurs au Mexique, Espagne, Nouvelle-Zélande.</p>
+          <div class="project-skills">
+            <span class="ps ps-jeux">Gamification</span>
+            <span class="ps ps-ped">Ingénierie péd.</span>
+            <span class="ps ps-lang">FLE</span>
+            <span class="ps ps-num">Numérique</span>
+          </div>
+          <a href="https://flescape.hypotheses.org/" target="_blank" class="project-link">↗ Voir le projet</a>
+        </div>
+
+        <div class="project-card" data-skills="jeux,pedagogie,numerique,sante">
+          <div class="project-header">
+            <span class="project-icon">💊</span>
+            <span class="project-year">2019–2021</span>
+          </div>
+          <h3>ESCAPARA</h3>
+          <p class="project-type">Escape game — Parasitologie</p>
+          <p>Escape game pédagogique numérique conçu pour la révision de la parasitologie auprès des étudiants en pharmacie de Rennes 1. Conception du module d'évaluation ludique.</p>
+          <div class="project-skills">
+            <span class="ps ps-jeux">Gamification</span>
+            <span class="ps ps-ped">Ingénierie péd.</span>
+            <span class="ps ps-num">Numérique</span>
+            <span class="ps ps-sante">Santé</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-skills="mooc,pedagogie,langues,erasmus">
+          <div class="project-header">
+            <span class="project-icon">🏆</span>
+            <span class="project-year">2019–2023</span>
+          </div>
+          <h3>DECLAME'FLE</h3>
+          <p class="project-type">Projet Erasmus+ · MOOC · REL</p>
+          <p>Responsable pédagogique du projet et du MOOC « Enseigner la littérature en FLE ». Production de ressources éducatives libres (REL). Récompensé par le <strong>Label européen des Langues 2023</strong> de la Commission européenne.</p>
+          <div class="project-skills">
+            <span class="ps ps-mooc">MOOC</span>
+            <span class="ps ps-ped">Ingénierie péd.</span>
+            <span class="ps ps-lang">FLE</span>
+            <span class="ps ps-eu">Erasmus+</span>
+          </div>
+          <a href="https://declamefle.hypotheses.org/" target="_blank" class="project-link">↗ Voir le projet</a>
+        </div>
+
+        <div class="project-card" data-skills="mondes-virtuels,jeux,pedagogie,langues">
+          <div class="project-header">
+            <span class="project-icon">🎮</span>
+            <span class="project-year">2016–2018</span>
+          </div>
+          <h3>Blockly FLE</h3>
+          <p class="project-type">Didacticiel — Jeu numérique FLE</p>
+          <p>Création d'un jeu en ligne sur les déplacements dans le campus de Rennes 2 pour apprenant de FLE. Projet de Master présenté lors des journées LIDILE 2017.</p>
+          <div class="project-skills">
+            <span class="ps ps-jeux">Jeu numérique</span>
+            <span class="ps ps-lang">FLE</span>
+            <span class="ps ps-num">Numérique</span>
+          </div>
+          <a href="https://dollyfle.lgeorget.eu/maze/maze.html?lang=fr&level=1&skin=2" target="_blank" class="project-link">↗ Tester le jeu</a>
+        </div>
+
+        <div class="project-card" data-skills="jeux,pedagogie,egalite">
+          <div class="project-header">
+            <span class="project-icon">✊</span>
+            <span class="project-year">2019–2022</span>
+          </div>
+          <h3>Féminisme EG</h3>
+          <p class="project-type">Escape Game — Égalité F/H</p>
+          <p>Escape game pédagogique sur le féminisme, conçu avec le Service Culturel de Rennes 2. Récompensé par le <strong>Prix à l'Initiative de l'EFHCA</strong> pour les bonnes pratiques en matière d'égalité. Utilisé lors de l'AIPU 2022.</p>
+          <div class="project-skills">
+            <span class="ps ps-jeux">Gamification</span>
+            <span class="ps ps-ped">Ingénierie péd.</span>
+            <span class="ps ps-egalite">Égalité F/H</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONNEXIONS VISUELLES -->
+      <div class="skills-constellation">
+        <h3>Carte des compétences transversales</h3>
+        <p>Les projets ci-dessus mobilisent ces domaines d'expertise en réseau :</p>
+        <div class="constellation-map" id="constellation">
+          <div class="skill-node node-center" data-node="center">
+            <span>Dolly<br>RG</span>
+          </div>
+          <div class="skill-node node-1" data-node="ped">Ingénierie<br>pédagogique</div>
+          <div class="skill-node node-2" data-node="lang">Didactique<br>des langues</div>
+          <div class="skill-node node-3" data-node="jeux">Gamification<br>&amp; Jeux</div>
+          <div class="skill-node node-4" data-node="virt">Mondes<br>virtuels</div>
+          <div class="skill-node node-5" data-node="rech">Recherche<br>corpus</div>
+          <div class="skill-node node-6" data-node="proj">Gestion<br>de projet</div>
+          <svg class="constellation-svg" id="constellation-svg" aria-hidden="true"></svg>
+        </div>
+        <div class="legend-projects">
+          <span class="lp lp-rennes">🌐 Rennes2D</span>
+          <span class="lp lp-flescape">🔐 FLEscape</span>
+          <span class="lp lp-escapara">💊 Escapara</span>
+          <span class="lp lp-declame">🏆 Declame'FLE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECHERCHE -->
+  <section id="research" class="section section-tinted reveal">
+    <div class="container">
+      <p class="section-eyebrow">Recherche</p>
+      <h2>Activités scientifiques</h2>
+      <div class="research-grid">
+
+        <div class="research-card research-featured">
+          <span class="research-type">Thèse</span>
+          <h3>Du corpus linguistique au serious game</h3>
+          <p>Convergences méthodologiques et numériques pour la didactique des langues. Dir. Élisabeth Richard — LIDILE EA 3874, Université Rennes 2.</p>
+          <a href="http://www.theses.fr/s217113" target="_blank" class="btn-small">↗ theses.fr</a>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2025</span>
+          <h3>RANACLES 2025 — Nantes</h3>
+          <p>Un bot IA pour enrichir les parcours d'apprentissage : étude de cas dans le monde virtuel RENNES2D.</p>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2025</span>
+          <h3>ISPEV@L — Rennes</h3>
+          <p>Avec F. Barbin, R. Dickason — « À la découverte de survivant·es : ludification et monde virtuel »</p>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2025</span>
+          <h3>International Digital Week — Nice</h3>
+          <p>Avec E. Richard, C. Evain, M. Lines — Atelier et Poster sur les mondes virtuels (Université Côte d'Azur).</p>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2024</span>
+          <h3>TchéCaLex — Plzeň (République tchèque)</h3>
+          <p>Avec E. Richard — « Un corpus linguistique pour décrire l'espace dans un monde virtuel 2D : le cas de <em>là</em>, <em>ici</em> et <em>là-bas</em> dans les discours de déplacement »</p>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2023</span>
+          <h3>ADCUEFE – CAMPUS FLE — Lyon</h3>
+          <p>Avec E. Richard, M-F Bourvon, F. Hervé-Pecot — « De l'EIAH à l'escape game pédagogique en ligne : une pratique numérique qui favorise les interactions en langues »</p>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2023</span>
+          <h3>QPES — Lausanne (Suisse)</h3>
+          <p>Avec E. Richard, M. Ceylan — « FLEscape, un environnement immersif pour augmenter les interactions entre acteurs sociaux »</p>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2022</span>
+          <h3>CRIFPE — Montréal (Canada)</h3>
+          <p>Avec E. Richard et G. Drouet — « FLEscape, un projet de formation expérientielle : entre perspective actionnelle et formation professionnelle »</p>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2021</span>
+          <h3>Centenaire Sorbonne — Paris</h3>
+          <p>Avec E. Richard, A. Pineda, C. Mornet — « De la ludification au Serious Game FLE : l'exemple de FLESCAPE »</p>
+          <a href="https://youtu.be/QHCCeZvSaeQ" target="_blank" class="btn-small">↗ Vidéo</a>
+        </div>
+
+        <div class="research-card">
+          <span class="research-type">2019</span>
+          <h3>CIDLS8 — Sherbrooke (Canada)</h3>
+          <p>Avec E. Richard et A. Pineda — « L'univers immersif ou comment favoriser un apprentissage expérientiel du FLE en contexte universitaire »</p>
+        </div>
+
+      </div>
+
+      <div class="responsibilities">
+        <h3>Responsabilités scientifiques</h3>
+        <div class="resp-grid">
+          <div class="resp-item">
+            <span class="resp-icon">🗂</span>
+            <div>
+              <strong>Membre du comité d'organisation</strong>
+              <p>32e Congrès National RANACLES — Nantes 2025. Coordinatrice générale, cheffe d'équipe logistique et scientifique.</p>
+            </div>
+          </div>
+          <div class="resp-item">
+            <span class="resp-icon">🗂</span>
+            <div>
+              <strong>Membre du comité d'organisation</strong>
+              <p>35e colloque international du CerLiCO — 2022</p>
+            </div>
+          </div>
+          <div class="resp-item">
+            <span class="resp-icon">📝</span>
+            <div>
+              <strong>Membre du comité scientifique</strong>
+              <p>Journées de l'École Doctorale ELICC 2020 et 2021</p>
+            </div>
+          </div>
+          <div class="resp-item">
+            <span class="resp-icon">🌍</span>
+            <div>
+              <strong>Mobilité internationale</strong>
+              <p>Lauréate bourse Rennes Métropole &amp; École Doctorale — Universidad Nacional de Tucumán, Argentine (2021)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPÉTENCES -->
+  <section id="skills" class="section reveal">
+    <div class="container">
+      <p class="section-eyebrow">Compétences</p>
+      <h2>Expertises numériques &amp; pédagogiques</h2>
+
+      <div class="skills-domains">
+
+        <div class="skill-domain">
+          <h3>🎓 Ingénierie pédagogique</h3>
+          <div class="skill-tags">
+            <span>Ingénierie pédagogique</span>
+            <span>Digital Learning</span>
+            <span>Gestion de projet</span>
+            <span>Formation hybride</span>
+            <span>MOOC / REL</span>
+            <span>LMS / Moodle</span>
+            <span>Didactique des langues</span>
+          </div>
+        </div>
+
+        <div class="skill-domain">
+          <h3>🌐 Mondes virtuels &amp; Immersion</h3>
+          <div class="skill-tags">
+            <span>WorkAdventure</span>
+            <span>Gather.town</span>
+            <span>Spatial.chat</span>
+            <span>Frame (3D)</span>
+            <span>360° (Insta360, Ricoh Theta)</span>
+            <span>Thinglink</span>
+          </div>
+        </div>
+
+        <div class="skill-domain">
+          <h3>🎮 Gamification &amp; Outils</h3>
+          <div class="skill-tags">
+            <span>Articulate Storyline</span>
+            <span>H5P</span>
+            <span>Genially</span>
+            <span>LearningApps</span>
+            <span>Educaplay</span>
+            <span>Minecraft</span>
+            <span>Klaxoon</span>
+          </div>
+        </div>
+
+        <div class="skill-domain">
+          <h3>🔬 Recherche &amp; Corpus</h3>
+          <div class="skill-tags">
+            <span>CLAN</span>
+            <span>LaTeX / Overleaf</span>
+            <span>Analyse de corpus</span>
+            <span>Serious games</span>
+            <span>Recherche-action</span>
+          </div>
+        </div>
+
+        <div class="skill-domain">
+          <h3>🖥 Création numérique</h3>
+          <div class="skill-tags">
+            <span>Canva</span>
+            <span>GIMP / Inkscape</span>
+            <span>Filmora / ScreencastO-Matic</span>
+            <span>WordPress / Wix</span>
+            <span>YouTube Studio</span>
+            <span>IA générative</span>
+          </div>
+        </div>
+
+        <div class="skill-domain">
+          <h3>🌍 Plateformes &amp; Web</h3>
+          <div class="skill-tags">
+            <span>Moodle</span>
+            <span>WordPress</span>
+            <span>Hypotheses.org</span>
+            <span>Suite Office</span>
+            <span>Padlet</span>
+            <span>Open Sankoré</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ENSEIGNEMENT -->
+  <section id="teaching" class="section section-tinted reveal">
+    <div class="container">
+      <p class="section-eyebrow">Enseignement &amp; Formation</p>
+      <h2>Transmission &amp; Formation de formateurs</h2>
+      <div class="teaching-grid">
+        <div class="teaching-card">
+          <span class="teaching-year">2018 – 2025</span>
+          <h3>Université Rennes 2</h3>
+          <ul>
+            <li>Master 1 DDL — Médiation et Diffusion de Ressources en DDL</li>
+            <li>Master 2 NIpro &amp; DIL — UMI1 Projet 3 / Expertise de ressources</li>
+            <li>L3 Atelier Professionnel PRO FLE (UEO)</li>
+            <li>L2 Métiers de l'enseignement des langues vivantes (UEO)</li>
+            <li>Espagnol L1 et L3 (ATV)</li>
+          </ul>
+        </div>
+        <div class="teaching-card">
+          <span class="teaching-year">International</span>
+          <h3>Formation de formateurs</h3>
+          <ul>
+            <li>🇳🇿 Nouvelle-Zélande — Novembre Numérique 2023 (Alliance Française Christchurch)</li>
+            <li>🇦🇷 Argentine — FLEckathon (Ambassade de France) 2021</li>
+            <li>🇧🇭 Bahreïn — Université de Bahreïn 2019</li>
+            <li>🇫🇷 Paris — Université Paris Diderot 2020</li>
+          </ul>
+        </div>
+        <div class="teaching-card">
+          <span class="teaching-year">2019 – 2021</span>
+          <h3>Université Rennes 1</h3>
+          <ul>
+            <li>UFR Parasitologie — Conception d'un module d'évaluation ludique</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section section-dark reveal">
+    <div class="container contact-container">
+      <p class="section-eyebrow light">Contact</p>
+      <h2>Travaillons ensemble</h2>
+      <p class="contact-intro">Intéressé·e par une collaboration, une communication ou un projet pédagogique innovant ? N'hésitez pas à me contacter.</p>
+      <div class="contact-cards">
+        <a href="mailto:dolly.ramella-georget@univ-rennes2.fr" class="contact-card">
+          <span class="contact-icon">📧</span>
+          <span class="contact-label">Email Rennes 2</span>
+          <span class="contact-value">dolly.ramella-georget<br>@univ-rennes2.fr</span>
+        </a>
+        <a href="https://perso.univ-rennes2.fr/dolly.ramella-georget" target="_blank" class="contact-card">
+          <span class="contact-icon">🌐</span>
+          <span class="contact-label">Page professionnelle</span>
+          <span class="contact-value">perso.univ-rennes2.fr</span>
+        </a>
+        <a href="https://lespacedeslangues.univ-rennes2.fr" target="_blank" class="contact-card">
+          <span class="contact-icon">🏛</span>
+          <span class="contact-label">Espace des Langues</span>
+          <span class="contact-value">lespacedeslangues<br>.univ-rennes2.fr</span>
+        </a>
+        <a href="http://www.theses.fr/s217113" target="_blank" class="contact-card">
+          <span class="contact-icon">🎓</span>
+          <span class="contact-label">Thèse</span>
+          <span class="contact-value">theses.fr/s217113</span>
+        </a>
+      </div>
+      <div class="bureau-info">
+        <p>📍 Bureau E309 — Bâtiment E, Campus de Villejean, Université Rennes 2</p>
+      </div>
+    </div>
   </section>
 
   <footer>
-    <p>© 2026 Dolly Ramella</p>
+    <div class="footer-inner">
+      <span class="footer-logo">D·R·G</span>
+      <p>© 2026 Dolly Ramella Georget — Ingénieure pédagogique &amp; Doctorante</p>
+      <p class="footer-lab">LIDILE EA 3874 — Université Rennes 2 / Nantes Université</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>

@@ -18,8 +18,8 @@ cat > /mnt/user-data/outputs/style.css << 'EOF'
   --white: #FFFFFF;
   --radius: 12px;
   --radius-lg: 20px;
-  --shadow: 0 4px 24px rgba(15,27,53,0.10);
-  --shadow-lg: 0 12px 48px rgba(15,27,53,0.16);
+  --shadow: 0 4px 24px rgba(15,27,53,0.6);
+  --shadow-lg: 0 12px 48px rgba(15,27,53,0.6);
   --transition: 0.3s ease;
 }
 
@@ -51,12 +51,12 @@ img { max-width: 100%; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: rgba(247,244,238,0.92);
+  background: rgba(247,244,238,0.9);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(15,27,53,0.08);
+  border-bottom: 1px solid rgba(15,27,53,5);
   transition: box-shadow var(--transition);
 }
-#navbar.scrolled { box-shadow: 0 2px 20px rgba(15,27,53,0.12); }
+#navbar.scrolled { box-shadow: 0 2px 20px rgba(15,27,53,0.5); }
 
 .nav-inner {
   max-width: 1100px;
@@ -144,7 +144,7 @@ img { max-width: 100%; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 60% at 80% 50%, rgba(232,97,74,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 50%, rgba(232,97,74,0.12) 0%, transparent 80%),
     radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,169,110,0.08) 0%, transparent 50%);
 }
 
@@ -202,7 +202,7 @@ img { max-width: 100%; }
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(232,97,74,0.4);
+  box-shadow: 0 8px 24px rgba(232,97,74,0.8);
 }
 
 .btn-ghost {
@@ -229,7 +229,7 @@ img { max-width: 100%; }
   font-size: 0.78rem;
   padding: 0.35rem 0.9rem;
   background: rgba(155,13,238,1);
-  border: 1px solid rgba(247,244,238,0.2);
+  border: 1px solid rgba(247,244,238,0.7);
   border-radius: 50px;
   color: rgba(247,244,238,0.8);
 }
@@ -246,13 +246,13 @@ img { max-width: 100%; }
 .orbit-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(201,169,110,0.2);
+  border: 1px solid rgba(201,169,110,0.7);
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
 }
 .ring-1 { width: 120px; height: 120px; }
-.ring-2 { width: 210px; height: 210px; border-color: rgba(232,97,74,0.15); }
-.ring-3 { width: 300px; height: 300px; border-color: rgba(247,244,238,0.08); }
+.ring-2 { width: 210px; height: 210px; border-color: rgba(232,97,74,0.6); }
+.ring-3 { width: 300px; height: 300px; border-color: rgba(247,244,238,0.8); }
 
 .orbit-center {
   position: absolute;
@@ -268,7 +268,7 @@ img { max-width: 100%; }
   font-size: 1rem;
   color: var(--white);
   text-align: center;
-  box-shadow: 0 0 40px rgba(232,97,74,0.4);
+  box-shadow: 0 0 40px rgba(232,97,74,0.8);
 }
 
 .orbit-dot {

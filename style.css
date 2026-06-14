@@ -654,10 +654,10 @@ img { max-width: 100%; }
   border-radius: 50px;
   font-weight: 600;
 }
-.lp-rennes   { background: rgba(43,108,176,0.2); color: #90CDF4; }
-.lp-flescape { background: rgba(192,86,33,0.2);  color: #FBD38D; }
-.lp-escapara { background: rgba(155,35,53,0.2);  color: #FEB2B2; }
-.lp-declame  { background: rgba(34,84,61,0.2);   color: #9AE6B4; }
+.lp-rennes   { background: rgba(43,108,176,0.9); color: #90CDF4; }
+.lp-flescape { background: rgba(192,86,33,0.9);  color: #FBD38D; }
+.lp-escapara { background: rgba(155,35,53,0.9);  color: #FEB2B2; }
+.lp-declame  { background: rgba(34,84,61,0.9);   color: #9AE6B4; }
 
 /* ============================================================
    RECHERCHE
@@ -673,7 +673,7 @@ img { max-width: 100%; }
   background: var(--white);
   border-radius: var(--radius);
   padding: 1.6rem;
-  border: 1px solid rgba(15,27,53,0.07);
+  border: 1px solid rgba(15,27,53,0.7);
   transition: transform var(--transition), box-shadow var(--transition);
 }
 .research-card:hover {

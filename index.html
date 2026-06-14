@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -37,29 +37,37 @@
 
   <!-- HERO -->
   <section id="hero" class="hero">
-    <div class="container">
-      <p class="hero-eyebrow">Ingénieure pédagogique · Doctorante</p>
-      <h1 class="hero-title">Dolly Ramella Georget</h1>
-      <p class="hero-subtitle">Je conçois des dispositifs d'apprentissage innovants : mondes virtuels, serious games, formations hybrides et didactique des langues.</p>
-      <div class="hero-meta">
-        <div class="meta-item">
-          <span class="meta-icon">🎓</span>
-          <p>LIDILE EA 3874<br><small>Nantes Université</small></p>
+    <div class="container hero-container">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Ingénieure pédagogique · Doctorante</p>
+        <h1 class="hero-title">Dolly<br>Ramella Georget</h1>
+        <p class="hero-subtitle">Je conçois des dispositifs d'apprentissage innovants : mondes virtuels, serious games, formations hybrides et didactique des langues.</p>
+        <div class="hero-meta">
+          <div class="meta-item">
+            <span class="meta-icon">🎓</span>
+            <p>LIDILE EA 3874<br><small>Nantes Université</small></p>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">🏆</span>
+            <p>Label européen<br><small>des Langues 2023</small></p>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">🌐</span>
+            <p>7+ ans<br><small>d'expérience</small></p>
+          </div>
         </div>
-        <div class="meta-item">
-          <span class="meta-icon">🏆</span>
-          <p>Label européen<br><small>des Langues 2023</small></p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">Voir mes projets</a>
+          <a href="#contact" class="btn btn-secondary">Me contacter</a>
         </div>
-        <div class="meta-item">
-          <span class="meta-icon">🌐</span>
-          <p>7+ ans<br><small>d'expérience</small></p>
+        <p class="scroll-hint">Défiler ↓</p>
+      </div>
+      <div class="hero-profile">
+        <div class="profile-image">
+          <img src="https://via.placeholder.com/280/0A1428/00A8FF?text=Dolly" alt="Dolly Ramella Georget" />
+          <div class="profile-badge">Pédagogue</div>
         </div>
       </div>
-      <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">Voir mes projets</a>
-        <a href="#contact" class="btn btn-secondary">Me contacter</a>
-      </div>
-      <p class="scroll-hint">Défiler ↓</p>
     </div>
   </section>
 
@@ -115,7 +123,7 @@
             <span class="timeline-year">2022 – 2025</span>
             <h3>Cheffe de projet &amp; Ingénieure pédagogique numérique</h3>
             <p class="timeline-org">Projet Espace des Langues (PIA4) — Université Rennes 2</p>
-            <p>Pilotage du projet, création d'environnements immersifs, développement de dispositifs innovants, webmaster de plusieurs plateformes (lespacedeslangues, LIDILE, FLEscape).</p>
+            <p>Pilotage du projet, création d'environnements immersifs, développement de dispositifs innovants, webmaster de plusieurs plateformes.</p>
           </div>
         </div>
 
@@ -135,7 +143,7 @@
             <span class="timeline-year">2018 – 2022</span>
             <h3>Doctorat en Linguistique · Ingénierie · Didactique</h3>
             <p class="timeline-org">LIDILE EA 3874 — Université Rennes 2</p>
-            <p>Dir. Élisabeth Richard. Thèse : <em>« Du corpus linguistique au serious game : convergences méthodologiques et numériques »</em></p>
+            <p>Dir. Élisabeth Richard. Thèse : <em>« Du corpus linguistique au serious game »</em></p>
           </div>
         </div>
       </div>
@@ -150,98 +158,232 @@
 
       <div class="projects-grid">
 
-        <div class="project-card" data-year="2022–2025">
+        <div class="project-card" data-year="2022–2025" data-skills="mondes-virtuels,pedagogie,corpus">
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="https://via.placeholder.com/400x250/0D7FFF/FFFFFF?text=Rennes2D+1" alt="Rennes2D - Monde virtuel 1">
+              </div>
+              <div class="carousel-slide">
+                <img src="https://via.placeholder.com/400x250/7C3AED/FFFFFF?text=Rennes2D+2" alt="Rennes2D - Monde virtuel 2">
+              </div>
+              <div class="carousel-slide">
+                <img src="https://via.placeholder.com/400x250/06B6D4/FFFFFF?text=Rennes2D+3" alt="Rennes2D - Monde virtuel 3">
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Image précédente">‹</button>
+            <button class="carousel-btn next" aria-label="Image suivante">›</button>
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+              <span class="indicator" data-slide="1"></span>
+              <span class="indicator" data-slide="2"></span>
+            </div>
+          </div>
+
           <div class="project-header">
             <h3>RENNES2D</h3>
             <span class="project-badge">Monde virtuel</span>
           </div>
-          <p>Création et développement d'un monde virtuel sur WorkAdventure pour l'apprentissage des langues, les interactions à distance et les événements pédagogiques internationaux. Étudié comme corpus linguistique dans la thèse.</p>
+          <p>Création et développement d'un monde virtuel sur WorkAdventure pour l'apprentissage des langues et les interactions à distance.</p>
           <div class="project-skills">
             <span>WorkAdventure</span>
             <span>Mondes virtuels</span>
-            <span>Ingénierie pédagogique</span>
             <span>Corpus linguistique</span>
           </div>
           <a href="https://lespacedeslangues.univ-rennes2.fr" target="_blank" class="project-link">Explorer →</a>
         </div>
 
-        <div class="project-card" data-year="2019–2025">
+        <div class="project-card" data-year="2019–2025" data-skills="gamification,pedagogie,fle">
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="https://via.placeholder.com/400x250/00A8FF/FFFFFF?text=FLEscape+1" alt="FLEscape - Escape game 1">
+              </div>
+              <div class="carousel-slide">
+                <img src="https://via.placeholder.com/400x250/8B5CF6/FFFFFF?text=FLEscape+2" alt="FLEscape - Escape game 2">
+              </div>
+              <div class="carousel-slide">
+                <img src="https://via.placeholder.com/400x250/00D9FF/FFFFFF?text=FLEscape+3" alt="FLEscape - Escape game 3">
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Image précédente">‹</button>
+            <button class="carousel-btn next" aria-label="Image suivante">›</button>
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+              <span class="indicator" data-slide="1"></span>
+              <span class="indicator" data-slide="2"></span>
+            </div>
+          </div>
+
           <div class="project-header">
             <h3>FLEscape</h3>
             <span class="project-badge">Escape game FLE</span>
           </div>
-          <p>Escape game pédagogique numérique pour l'enseignement du FLE en contexte universitaire. Présenté dans de nombreux colloques internationaux. Formation de formateurs au Mexique, Espagne, Nouvelle-Zélande.</p>
+          <p>Escape game pédagogique numérique pour l'enseignement du FLE. Présenté dans de nombreux colloques internationaux.</p>
           <div class="project-skills">
             <span>Gamification</span>
             <span>FLE</span>
-            <span>Conception pédagogique</span>
-            <span>Formation de formateurs</span>
+            <span>Pédagogie</span>
           </div>
           <a href="https://flescape.hypotheses.org/" target="_blank" class="project-link">Voir →</a>
         </div>
 
-        <div class="project-card" data-year="2019–2023">
+        <div class="project-card" data-year="2019–2023" data-skills="mooc,pedagogie,erasmus">
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="https://via.placeholder.com/400x250/7C3AED/FFFFFF?text=DECLAME+1" alt="DECLAME'FLE - MOOC 1">
+              </div>
+              <div class="carousel-slide">
+                <img src="https://via.placeholder.com/400x250/06B6D4/FFFFFF?text=DECLAME+2" alt="DECLAME'FLE - MOOC 2">
+              </div>
+              <div class="carousel-slide">
+                <img src="https://via.placeholder.com/400x250/00A8FF/FFFFFF?text=DECLAME+3" alt="DECLAME'FLE - MOOC 3">
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Image précédente">‹</button>
+            <button class="carousel-btn next" aria-label="Image suivante">›</button>
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+              <span class="indicator" data-slide="1"></span>
+              <span class="indicator" data-slide="2"></span>
+            </div>
+          </div>
+
           <div class="project-header">
             <h3>DECLAME'FLE</h3>
             <span class="project-badge">MOOC · Erasmus+</span>
           </div>
-          <p>Responsable pédagogique du projet et du MOOC « Enseigner la littérature en FLE ». Production de ressources éducatives libres. <strong>Label européen des Langues 2023.</strong></p>
+          <p>Responsable pédagogique du projet et du MOOC « Enseigner la littérature en FLE ». <strong>Label européen 2023.</strong></p>
           <div class="project-skills">
             <span>MOOC</span>
-            <span>REL</span>
-            <span>Erasmus+</span>
             <span>Pédagogie</span>
+            <span>Erasmus+</span>
           </div>
           <a href="https://declamefle.hypotheses.org/" target="_blank" class="project-link">Découvrir →</a>
         </div>
 
-        <div class="project-card" data-year="2019–2021">
+        <div class="project-card" data-year="2019–2021" data-skills="gamification,sante">
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="https://via.placeholder.com/400x250/00D9FF/FFFFFF?text=ESCAPARA+1" alt="ESCAPARA - Pharmacie 1">
+              </div>
+              <div class="carousel-slide">
+                <img src="https://via.placeholder.com/400x250/0D7FFF/FFFFFF?text=ESCAPARA+2" alt="ESCAPARA - Pharmacie 2">
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Image précédente">‹</button>
+            <button class="carousel-btn next" aria-label="Image suivante">›</button>
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+              <span class="indicator" data-slide="1"></span>
+            </div>
+          </div>
+
           <div class="project-header">
             <h3>ESCAPARA</h3>
-            <span class="project-badge">Escape game pharmacie</span>
+            <span class="project-badge">Pharmacie</span>
           </div>
-          <p>Escape game pédagogique numérique pour la révision de parasitologie auprès des étudiants en pharmacie de Rennes 1. Conception du module d'évaluation ludique.</p>
+          <p>Escape game pédagogique pour la révision de parasitologie auprès des étudiants en pharmacie de Rennes 1.</p>
           <div class="project-skills">
             <span>Gamification</span>
             <span>Santé</span>
-            <span>Numérique</span>
-            <span>Évaluation</span>
           </div>
         </div>
 
-        <div class="project-card" data-year="2016–2018">
+        <div class="project-card" data-year="2016–2018" data-skills="gamification,fle">
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="https://via.placeholder.com/400x250/8B5CF6/FFFFFF?text=Blockly+1" alt="Blockly FLE 1">
+              </div>
+              <div class="carousel-slide">
+                <img src="https://via.placeholder.com/400x250/7C3AED/FFFFFF?text=Blockly+2" alt="Blockly FLE 2">
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Image précédente">‹</button>
+            <button class="carousel-btn next" aria-label="Image suivante">›</button>
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+              <span class="indicator" data-slide="1"></span>
+            </div>
+          </div>
+
           <div class="project-header">
             <h3>Blockly FLE</h3>
             <span class="project-badge">Jeu numérique</span>
           </div>
-          <p>Jeu en ligne sur les déplacements dans le campus pour apprenants FLE. Projet de Master présenté aux journées LIDILE 2017. Interface ludique pour l'apprentissage spatial et lexical.</p>
-          <div class="project-skills">
-            <span>Jeu numérique</span>
-            <span>FLE</span>
-            <span>Didactique</span>
-          </div>
-          <a href="https://dollyfle.lgeorget.eu/maze/maze.html?lang=fr&level=1&skin=2" target="_blank" class="project-link">Tester →</a>
-        </div>
-
-        <div class="project-card" data-year="2019–2022">
-          <div class="project-header">
-            <h3>Féminisme EG</h3>
-            <span class="project-badge">Égalité F/H</span>
-          </div>
-          <p>Escape game pédagogique sur le féminisme avec le Service Culturel de Rennes 2. <strong>Prix à l'Initiative de l'EFHCA</strong> pour les bonnes pratiques en égalité. Utilisé lors de l'AIPU 2022.</p>
+          <p>Jeu en ligne sur les déplacements pour apprenants FLE. Présenté aux journées LIDILE 2017.</p>
           <div class="project-skills">
             <span>Gamification</span>
-            <span>Égalité</span>
-            <span>Pédagogie</span>
+            <span>FLE</span>
           </div>
+          <a href="https://dollyfle.lgeorget.eu/maze/maze.html?lang=fr&level=1&skin=2" target="_blank" class="project-link">Tester →</a>
         </div>
 
       </div>
     </div>
   </section>
 
+  <!-- COMPÉTENCES - CONSTELLATION -->
+  <section id="skills" class="section section-light reveal">
+    <div class="container">
+      <h2>Compétences &amp; Constellation</h2>
+      <p class="section-intro">Explorez l'interaction entre mes domaines de compétences. Survolez un nœud pour voir les connexions.</p>
+
+      <div class="constellation-wrapper">
+        <svg class="constellation-svg" id="constellation-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="constellation-nodes" id="constellation-nodes">
+          <!-- Nodes générés par JS -->
+        </div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>🎓 Ingénierie pédagogique</h3>
+          <div class="skill-tags">
+            <span>Ingénierie pédagogique</span>
+            <span>Digital Learning</span>
+            <span>Formation hybride</span>
+            <span>MOOC / REL</span>
+            <span>Didactique des langues</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>🌐 Mondes virtuels</h3>
+          <div class="skill-tags">
+            <span>WorkAdventure</span>
+            <span>Gather.town</span>
+            <span>Environnements immersifs</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>🎮 Gamification</h3>
+          <div class="skill-tags">
+            <span>Articulate Storyline</span>
+            <span>H5P</span>
+            <span>Genially</span>
+            <span>Escape games</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>🔬 Recherche</h3>
+          <div class="skill-tags">
+            <span>Analyse de corpus</span>
+            <span>Serious games</span>
+            <span>Recherche-action</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- RECHERCHE -->
-  <section id="research" class="section section-light reveal">
+  <section id="research" class="section reveal">
     <div class="container">
       <h2>Activités scientifiques</h2>
       
@@ -258,153 +400,16 @@
           <p><strong>RANACLES 2025 — Nantes</strong><br>Un bot IA pour enrichir les parcours d'apprentissage dans RENNES2D.</p>
         </div>
         <div class="research-item">
-          <h4>2025</h4>
-          <p><strong>ISPEV@L — Rennes</strong><br>Avec F. Barbin, R. Dickason — Ludification et monde virtuel.</p>
-        </div>
-        <div class="research-item">
           <h4>2024</h4>
-          <p><strong>TchéCaLex — Plzeň (Rép. Tchèque)</strong><br>Avec E. Richard — Corpus linguistique et espace virtuel 2D.</p>
+          <p><strong>TchéCaLex — Plzeň</strong><br>Avec E. Richard — Corpus linguistique et espace virtuel 2D.</p>
         </div>
         <div class="research-item">
           <h4>2023</h4>
-          <p><strong>ADCUEFE / CAMPUS FLE — Lyon</strong><br>De l'EIAH à l'escape game pédagogique en ligne.</p>
-        </div>
-        <div class="research-item">
-          <h4>2023</h4>
-          <p><strong>QPES — Lausanne (Suisse)</strong><br>FLEscape, environnement immersif et interactions.</p>
+          <p><strong>ADCUEFE / CAMPUS FLE — Lyon</strong><br>De l'EIAH à l'escape game pédagogique.</p>
         </div>
         <div class="research-item">
           <h4>2022</h4>
-          <p><strong>CRIFPE — Montréal (Canada)</strong><br>FLEscape et formation expérientielle.</p>
-        </div>
-        <div class="research-item">
-          <h4>2021</h4>
-          <p><strong>Centenaire Sorbonne — Paris</strong><br>De la ludification au Serious Game FLE.</p>
-          <a href="https://youtu.be/QHCCeZvSaeQ" target="_blank" style="font-size: 0.9rem;">↗ Voir la vidéo</a>
-        </div>
-        <div class="research-item">
-          <h4>2019</h4>
-          <p><strong>CIDLS8 — Sherbrooke (Canada)</strong><br>Univers immersif et apprentissage expérientiel.</p>
-        </div>
-      </div>
-
-      <div class="responsibilities">
-        <h3>Responsabilités scientifiques</h3>
-        <div class="resp-list">
-          <div class="resp-item">
-            <h4>Coordinatrice générale</h4>
-            <p>32e Congrès RANACLES — Nantes 2025. Cheffe d'équipe logistique et scientifique.</p>
-          </div>
-          <div class="resp-item">
-            <h4>Comité d'organisation</h4>
-            <p>35e colloque international du CerLiCO — 2022</p>
-          </div>
-          <div class="resp-item">
-            <h4>Comité scientifique</h4>
-            <p>Journées de l'École Doctorale ELICC — 2020 et 2021</p>
-          </div>
-          <div class="resp-item">
-            <h4>Mobilité internationale</h4>
-            <p>Lauréate bourse Rennes Métropole — Universidad Nacional de Tucumán, Argentine (2021)</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="teaching">
-        <h3>Enseignement &amp; Formation de formateurs</h3>
-        <div class="teaching-grid">
-          <div class="teaching-item">
-            <h4>Université Rennes 2 (2018–2025)</h4>
-            <ul>
-              <li>Master 1 DDL — Médiation et Diffusion de Ressources</li>
-              <li>Master 2 NIpro &amp; DIL — Expertise de ressources</li>
-              <li>L3 Atelier Professionnel PRO FLE</li>
-              <li>Espagnol L1 et L3</li>
-            </ul>
-          </div>
-          <div class="teaching-item">
-            <h4>International</h4>
-            <ul>
-              <li>🇳🇿 Nouvelle-Zélande — Novembre Numérique 2023</li>
-              <li>🇦🇷 Argentine — FLEckathon (Ambassade) 2021</li>
-              <li>🇧🇭 Bahreïn — Université de Bahreïn 2019</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMPÉTENCES -->
-  <section id="skills" class="section reveal">
-    <div class="container">
-      <h2>Compétences &amp; Outils</h2>
-
-      <div class="skills-grid">
-        <div class="skill-category">
-          <h3>🎓 Ingénierie pédagogique</h3>
-          <div class="skill-tags">
-            <span>Ingénierie pédagogique</span>
-            <span>Digital Learning</span>
-            <span>Gestion de projet</span>
-            <span>Formation hybride</span>
-            <span>MOOC / REL</span>
-            <span>LMS / Moodle</span>
-            <span>Didactique des langues</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>🌐 Mondes virtuels</h3>
-          <div class="skill-tags">
-            <span>WorkAdventure</span>
-            <span>Gather.town</span>
-            <span>Spatial.chat</span>
-            <span>Frame (3D)</span>
-            <span>360° immersif</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>🎮 Gamification &amp; Outils auteurs</h3>
-          <div class="skill-tags">
-            <span>Articulate Storyline</span>
-            <span>H5P</span>
-            <span>Genially</span>
-            <span>LearningApps</span>
-            <span>Educaplay</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>🔬 Recherche &amp; Corpus</h3>
-          <div class="skill-tags">
-            <span>CLAN</span>
-            <span>LaTeX / Overleaf</span>
-            <span>Analyse de corpus</span>
-            <span>Recherche-action</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>🖥 Création &amp; Design</h3>
-          <div class="skill-tags">
-            <span>Canva</span>
-            <span>GIMP / Inkscape</span>
-            <span>Filmora / ScreencastO-Matic</span>
-            <span>WordPress</span>
-            <span>IA générative</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>🌍 Plateformes</h3>
-          <div class="skill-tags">
-            <span>Moodle</span>
-            <span>Hypotheses.org</span>
-            <span>Padlet</span>
-            <span>Suite Office 365</span>
-          </div>
+          <p><strong>CRIFPE — Montréal</strong><br>FLEscape et formation expérientielle.</p>
         </div>
       </div>
     </div>

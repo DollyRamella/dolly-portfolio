@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compétences – Dolly Ramella</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e1117;
+      --surface: #161b27;
+      --primary: #7c9fff;
+      --accent: #b8f0e0;
+      --muted: #3a4460;
+      --text: #e8eaf6;
+      --text-dim: #7a8ab0;
+      --line: rgba(124, 159, 255, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.4rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    .constellation-wrapper {
+      position: relative;
+      width: min(700px, 100vw - 2rem);
+      aspect-ratio: 1 / 0.75;
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .nodes-layer {
+      position: absolute;
+      inset: 0;
+    }
+
+    .node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .node:hover { transform: translate(-50%, -50%) scale(1.1); }
+    .node:hover .bubble { box-shadow: 0 0 18px var(--primary), 0 0 36px rgba(124,159,255,0.2); }
+    .node.active .bubble {
+      background: var(--primary);
+      color: var(--bg);
+      box-shadow: 0 0 22px var(--primary), 0 0 44px rgba(124,159,255,0.25);
+    }
+
+    .bubble {
+      background: var(--surface);
+      border: 1.5px solid var(--muted);
+      border-radius: 999px;
+      padding: 0.45em 1.1em;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      transition: background 0.25s, box-shadow 0.25s, border-color 0.25s, color 0.25s;
+      user-select: none;
+    }
+
+    .node[data-cat="pédagogie"] .bubble  { border-color: #7c9fff; }
+    .node[data-cat="numérique"] .bubble  { border-color: #b8f0e0; }
+    .node[data-cat="recherche"] .bubble  { border-color: #f0c8a0; }
+    .node[data-cat="outils"]    .bubble  { border-color: #d4a8ff; }
+
+    /* Center label */
+    .center-node .bubble {
+      background: transparent;
+      border-color: var(--primary);
+      color: var(--primary);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* Tooltip */
+    .tooltip {
+      position: fixed;
+      background: var(--surface);
+      border: 1px solid var(--muted);
+      border-radius: 10px;
+      padding: 0.8rem 1.1rem;
+      font-size: 0.78rem;
+      color: var(--text);
+      max-width: 220px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 100;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      line-height: 1.5;
+    }
+    .tooltip.visible { opacity: 1; }
+    .tooltip strong { color: var(--primary); display: block; margin-bottom: 0.3em; }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1.6rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .legend-item:hover { opacity: 0.8; }
+    .legend-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Compétences</h2>
+<p class="subtitle">Survolez une compétence pour en savoir plus · Cliquez pour filtrer par catégorie</p>
+
+<div class="constellation-wrapper" id="wrapper">
+  <canvas id="lines"></canvas>
+  <div class="nodes-layer" id="nodes"></div>
+</div>
+
+<div class="legend" id="legend"></div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const skills = [
+  // Pédagogie
+  { label: "Ingénierie pédagogique", cat: "pédagogie", desc: "Conception de dispositifs de formation innovants, sur mesure et centrés sur l'apprenant.", x: 50, y: 18 },
+  { label: "Formation hybride",      cat: "pédagogie", desc: "Articulation des modalités présentielle et distancielle pour une expérience cohérente.", x: 22, y: 30 },
+  { label: "MOOC",                   cat: "pédagogie", desc: "Responsable pédagogique du MOOC DECLAME'FLE, lauréat du Label européen des langues 2023.", x: 76, y: 28 },
+  { label: "Scénarisation",          cat: "pédagogie", desc: "Écriture de scénarios pédagogiques et storyboards pour modules e-learning.", x: 14, y: 52 },
+  { label: "Didactique des langues", cat: "pédagogie", desc: "Spécialiste de l'enseignement/apprentissage des langues via le numérique et les serious games.", x: 85, y: 50 },
+
+  // Numérique
+  { label: "Digital Learning",       cat: "numérique", desc: "Conception et déploiement de parcours e-learning complets, de l'analyse au déploiement.", x: 32, y: 68 },
+  { label: "Mondes virtuels",        cat: "numérique", desc: "Création de Rennes2D sur WorkAdventure : espace immersif pour l'apprentissage et la collaboration.", x: 68, y: 68 },
+  { label: "Escape game pédagogique",cat: "numérique", desc: "Conception d'ESCAPARA, escape game numérique pour la révision en pharmacie.", x: 20, y: 82 },
+  { label: "IA générative",          cat: "numérique", desc: "Intégration d'outils d'IA dans les pratiques pédagogiques et les workflows de conception.", x: 80, y: 80 },
+
+  // Outils
+  { label: "Articulate Storyline",   cat: "outils", desc: "Création de modules e-learning interactifs avec animations et évaluations.", x: 40, y: 88 },
+  { label: "Moodle / LMS",           cat: "outils", desc: "Administration, structuration et suivi de formations sur plateformes LMS.", x: 60, y: 88 },
+  { label: "Canva",                  cat: "outils", desc: "Design de supports visuels pédagogiques clairs et attractifs.", x: 8, y: 70 },
+  { label: "WorkAdventure",          cat: "outils", desc: "Développement de campus virtuels 2D pour les interactions à distance.", x: 92, y: 65 },
+
+  // Recherche
+  { label: "Gestion de projet",      cat: "recherche", desc: "Pilotage de projets numériques complexes (AIR, Rennes2D, ESCAPARA).", x: 50, y: 50 },
+  { label: "Corpus linguistiques",   cat: "recherche", desc: "Travaux doctoraux sur les corpus pour décrire les interactions dans les mondes virtuels.", x: 30, y: 42 },
+  { label: "Serious games",          cat: "recherche", desc: "Recherche sur la convergence méthodologique entre jeu sérieux et didactique.", x: 70, y: 42 },
+  { label: "Publications",           cat: "recherche", desc: "Co-auteure de travaux sur les EIAH, escape games et corpus linguistiques (LIDILE).", x: 50, y: 35 },
+];
+
+const catColors = {
+  pédagogie: "#7c9fff",
+  numérique: "#b8f0e0",
+  recherche: "#f0c8a0",
+  outils:    "#d4a8ff",
+};
+
+const catLabels = {
+  pédagogie: "Pédagogie",
+  numérique: "Numérique",
+  recherche:  "Recherche",
+  outils:     "Outils",
+};
+
+// Connections: [from index, to index]
+const connections = [
+  [0,16],[0,15],[0,1],[0,2],[0,6],[0,7],
+  [1,3],[1,15],[2,9],[2,4],
+  [3,11],[4,6],[4,10],
+  [5,9],[5,11],[5,6],[5,7],
+  [6,12],[7,8],[8,11],
+  [13,0],[13,5],[13,14],[13,15],[13,16],
+  [14,16],[15,16],[16,2],[10,13],[9,5],
+];
+
+const wrapper = document.getElementById('wrapper');
+const nodesEl = document.getElementById('nodes');
+const canvas  = document.getElementById('lines');
+const ctx     = canvas.getContext('2d');
+const tooltip = document.getElementById('tooltip');
+const legend  = document.getElementById('legend');
+
+let activeCategory = null;
+let nodeEls = [];
+
+function buildLegend() {
+  Object.entries(catLabels).forEach(([cat, label]) => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `<div class="legend-dot" style="background:${catColors[cat]}"></div>${label}`;
+    item.addEventListener('click', () => {
+      activeCategory = (activeCategory === cat) ? null : cat;
+      updateActive();
+      drawLines();
+    });
+    legend.appendChild(item);
+  });
+}
+
+function buildNodes() {
+  skills.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = 'node';
+    el.dataset.cat = s.cat;
+    el.dataset.i = i;
+    el.style.left = s.x + '%';
+    el.style.top  = s.y + '%';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = s.label;
+    el.appendChild(bubble);
+
+    el.addEventListener('mouseenter', (e) => showTooltip(e, s));
+    el.addEventListener('mousemove',  (e) => moveTooltip(e));
+    el.addEventListener('mouseleave', hideTooltip);
+    el.addEventListener('click', () => {
+      activeCategory = (activeCategory === s.cat) ? null : s.cat;
+      updateActive();
+      drawLines();
+    });
+
+    nodesEl.appendChild(el);
+    nodeEls.push(el);
+  });
+}
+
+function updateActive() {
+  nodeEls.forEach((el, i) => {
+    const cat = skills[i].cat;
+    if (!activeCategory || cat === activeCategory) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+}
+
+function getNodeCenter(i) {
+  const el = nodeEls[i];
+  const wr = wrapper.getBoundingClientRect();
+  const nr = el.getBoundingClientRect();
+  return {
+    x: nr.left + nr.width/2  - wr.left,
+    y: nr.top  + nr.height/2 - wr.top,
+  };
+}
+
+function drawLines() {
+  const W = wrapper.offsetWidth;
+  const H = wrapper.offsetHeight;
+  canvas.width  = W;
+  canvas.height = H;
+  ctx.clearRect(0, 0, W, H);
+
+  connections.forEach(([a, b]) => {
+    const ca = skills[a].cat;
+    const cb = skills[b].cat;
+    const relevantA = !activeCategory || ca === activeCategory;
+    const relevantB = !activeCategory || cb === activeCategory;
+    if (!relevantA && !relevantB) return;
+
+    const pa = getNodeCenter(a);
+    const pb = getNodeCenter(b);
+
+    const alpha = (relevantA && relevantB) ? 0.3 : 0.08;
+    const color = (relevantA && relevantB)
+      ? catColors[ca]
+      : 'rgba(150,150,180,1)';
+
+    ctx.beginPath();
+    ctx.moveTo(pa.x, pa.y);
+    ctx.lineTo(pb.x, pb.y);
+    ctx.strokeStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.lineWidth   = 1;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  });
+
+  // Ambient stars
+  ctx.fillStyle = 'rgba(180,190,255,0.35)';
+  const stars = [[120,40],[350,20],[590,80],[50,180],[640,150],[200,490],[500,470],[100,380],[650,350]];
+  stars.forEach(([x,y]) => {
+    ctx.beginPath();
+    ctx.arc(x * W/700, y * H/525, 1.2, 0, Math.PI*2);
+    ctx.fill();
+  });
+}
+
+function showTooltip(e, s) {
+  tooltip.innerHTML = `<strong>${s.label}</strong>${s.desc}`;
+  tooltip.classList.add('visible');
+  moveTooltip(e);
+}
+function moveTooltip(e) {
+  const pad = 16;
+  let left = e.clientX + pad;
+  let top  = e.clientY + pad;
+  if (left + 230 > window.innerWidth)  left = e.clientX - 230 - pad;
+  if (top  + 100 > window.innerHeight) top  = e.clientY - 100 - pad;
+  tooltip.style.left = left + 'px';
+  tooltip.style.top  = top  + 'px';
+}
+function hideTooltip() { tooltip.classList.remove('visible'); }
+
+function init() {
+  buildLegend();
+  buildNodes();
+  updateActive();
+  requestAnimationFrame(() => { drawLines(); });
+}
+
+window.addEventListener('resize', () => {
+  requestAnimationFrame(drawLines);
+});
+
+init();
+
+// Subtle pulse animation on lines
+let frame = 0;
+function animatePulse() {
+  frame++;
+  if (frame % 90 === 0) drawLines(); // redraw lines occasionally for shimmer
+  requestAnimationFrame(animatePulse);
+}
+animatePulse();
+</script>
+</body>
+</html>

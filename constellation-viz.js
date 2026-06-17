@@ -1,3 +1,6 @@
+// ============================================================
+// CONSTELLATION VISUALIZATION - D3.js Implementation
+// ============================================================
 
 class SkillConstellation {
   constructor(svgSelector, dataObject) {

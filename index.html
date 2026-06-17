@@ -5,512 +5,374 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dolly Ramella | Portfolio</title>
-
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    /* ── Constellation de compétences ── */
-    #skills {
-      background: #0e1117;
-      padding: 4rem 1rem 3rem;
-    }
-
-    #skills h2 {
-      font-size: 1.1rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #7a8ab0;
-      margin-bottom: 0.4rem;
-      text-align: center;
-    }
-
-    .skills-subtitle {
-      font-size: 0.78rem;
-      color: #3a4460;
-      margin-bottom: 2rem;
-      text-align: center;
-      letter-spacing: 0.05em;
-    }
-
-    .constellation-wrapper {
-      position: relative;
-      width: min(700px, 100vw - 2rem);
-      aspect-ratio: 1 / 0.75;
-      margin: 0 auto;
-    }
-
-    .constellation-wrapper canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .nodes-layer {
-      position: absolute;
-      inset: 0;
-    }
-
-    .skill-node {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .skill-node:hover {
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    .skill-node:hover .bubble {
-      box-shadow: 0 0 18px #7c9fff, 0 0 36px rgba(124,159,255,0.2);
-    }
-
-    .skill-node.active .bubble {
-      background: #7c9fff;
-      color: #0e1117;
-      box-shadow: 0 0 22px #7c9fff, 0 0 44px rgba(124,159,255,0.25);
-    }
-
-    .bubble {
-      background: #161b27;
-      border: 1.5px solid #3a4460;
-      border-radius: 999px;
-      padding: 0.45em 1.1em;
-      font-size: 0.78rem;
-      font-weight: 500;
-      font-family: 'Poppins', sans-serif;
-      color: #e8eaf6;
-      white-space: nowrap;
-      transition: background 0.25s, box-shadow 0.25s, border-color 0.25s, color 0.25s;
-      user-select: none;
-    }
-
-    .skill-node[data-cat="pédagogie"] .bubble { border-color: #7c9fff; }
-    .skill-node[data-cat="numérique"] .bubble { border-color: #b8f0e0; }
-    .skill-node[data-cat="recherche"] .bubble { border-color: #f0c8a0; }
-    .skill-node[data-cat="outils"]    .bubble { border-color: #d4a8ff; }
-
-    .skills-tooltip {
-      position: fixed;
-      background: #161b27;
-      border: 1px solid #3a4460;
-      border-radius: 10px;
-      padding: 0.8rem 1.1rem;
-      font-size: 0.78rem;
-      font-family: 'Poppins', sans-serif;
-      color: #e8eaf6;
-      max-width: 220px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-      z-index: 1000;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-      line-height: 1.5;
-    }
-
-    .skills-tooltip.visible { opacity: 1; }
-
-    .skills-tooltip strong {
-      color: #7c9fff;
-      display: block;
-      margin-bottom: 0.3em;
-    }
-
-    .skills-legend {
-      display: flex;
-      gap: 1.4rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 1.6rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.72rem;
-      font-family: 'Poppins', sans-serif;
-      color: #7a8ab0;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .legend-item:hover { opacity: 0.8; }
-
-    .legend-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-  <header>
-    <nav>
-      <h2 class="logo">Dolly Ramella</h2>
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav class="navbar">
+    <div class="logo">DOLLY RAMELLA</div>
+    <ul class="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#experience">Expériences</a></li>
+      <li><a href="#projects">Projets</a></li>
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="#research">Recherche</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="burger" id="burger">☰</button>
+  </nav>
 
-      <ul>
-        <li><a href="#about">À propos</a></li>
-        <li><a href="#experience">Expériences</a></li>
-        <li><a href="#projects">Projets</a></li>
-        <li><a href="#research">Recherche</a></li>
-        <li><a href="#skills">Compétences</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="#about">À propos</a>
+    <a href="#experience">Expériences</a>
+    <a href="#projects">Projets</a>
+    <a href="#skills">Compétences</a>
+    <a href="#research">Recherche</a>
+    <a href="#contact">Contact</a>
+  </div>
 
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Ingénieure pédagogique numérique</h1>
-        <h2>Cheffe de projet e-learning &amp; Doctorante</h2>
-        <p>
-          Conception de dispositifs innovants, formation hybride,
-          mondes virtuels, digital learning et didactique des langues.
-        </p>
-        <a href="assets/cv.pdf" class="btn" target="_blank">
-          Télécharger mon CV
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-container">
+        <div class="hero-content">
+          <p class="hero-eyebrow">Ingénieure pédagogique numérique</p>
+          <h1 class="hero-title">Concevoir l'apprentissage de demain</h1>
+          <p class="hero-subtitle">
+            Cheffe de projet e-learning, doctorante au LIDILE (Nantes Université).
+            Je conçois des dispositifs innovants à l'intersection entre pédagogie,
+            mondes virtuels et didactique des langues.
+          </p>
+
+          <div class="hero-meta">
+            <div class="meta-item">
+              <span class="meta-icon">🎓</span>
+              <div>
+                <p>Doctorante</p>
+                <small>LIDILE – Nantes Université</small>
+              </div>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">🏛️</span>
+              <div>
+                <p>Ingénieure pédagogique</p>
+                <small>Nantes Université</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-cta">
+            <a href="assets/cv.pdf" class="btn btn-primary" target="_blank">Télécharger mon CV</a>
+            <a href="#contact" class="btn btn-secondary">Me contacter</a>
+          </div>
+
+          <p class="scroll-hint">↓ Découvrir</p>
+        </div>
+
+        <div class="hero-profile-wrapper">
+          <div class="hero-profile-bg"></div>
+          <div class="hero-profile">
+            <div class="profile-image">
+              <div class="profile-glow"></div>
+              <img src="assets/photo.jpg" alt="Dolly Ramella" onerror="this.style.display='none'">
+              <div class="profile-badge">🎓 Doctorante</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       À PROPOS
+       ============================================================ -->
+  <section id="about" class="section section-light">
+    <div class="container">
+      <h2 class="reveal">À propos</h2>
+      <p class="section-intro reveal">
+        Ingénieure de formation et ingénieure pédagogique numérique à Nantes Université,
+        je mène en parallèle une thèse au laboratoire LIDILE sur les liens entre corpus
+        linguistiques, serious games et apprentissage des langues.
+      </p>
+      <div class="about-grid reveal">
+        <div class="about-card">
+          <h3>Formation</h3>
+          <ul>
+            <li>Doctorat en cours – Sciences du langage (LIDILE, Nantes Université)</li>
+            <li>Master Didactique des langues – Université Rennes 2</li>
+            <li>Licence FLE – Université Rennes 2</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <h3>Centres d'intérêt</h3>
+          <ul>
+            <li>Mondes virtuels & apprentissage immersif</li>
+            <li>Gamification pédagogique</li>
+            <li>Corpus linguistiques</li>
+            <li>Innovation numérique en éducation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXPÉRIENCES
+       ============================================================ -->
+  <section id="experience" class="section">
+    <div class="container">
+      <h2 class="reveal">Expériences</h2>
+      <div class="timeline reveal">
+
+        <div class="timeline-item">
+          <span class="timeline-year">2025 – Aujourd'hui</span>
+          <div class="timeline-content">
+            <h3>Ingénieure de formation & Ingénieure pédagogique numérique</h3>
+            <p class="timeline-org">Nantes Université</p>
+            <p>Conception et déploiement de formations hybrides et à distance,
+            accompagnement des enseignants, gestion de projets numériques,
+            développement de ressources pédagogiques innovantes.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">2021 – 2025</span>
+          <div class="timeline-content">
+            <h3>Cheffe de projet numérique & Ingénieure pédagogique</h3>
+            <p class="timeline-org">Université Rennes 2</p>
+            <p>Pilotage de projets numériques innovants dans le cadre du programme AIR.
+            Conception d'environnements immersifs d'apprentissage et développement
+            de dispositifs de formation à distance.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJETS
+       ============================================================ -->
+  <section id="projects" class="section section-light">
+    <div class="container">
+      <h2 class="reveal">Projets phares</h2>
+      <div class="projects-grid">
+
+        <div class="project-card reveal">
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="assets/rennes2d-1.jpg" alt="Rennes2D" onerror="this.parentElement.style.background='linear-gradient(135deg,#0D7FFF,#7C3AED)'">
+              </div>
+            </div>
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+            </div>
+          </div>
+          <div class="project-header">
+            <h3>Rennes2D</h3>
+            <span class="project-badge">Monde virtuel</span>
+          </div>
+          <p>Monde virtuel développé sur WorkAdventure permettant l'apprentissage des langues et les interactions à distance.</p>
+          <div class="project-skills">
+            <span>WorkAdventure</span>
+            <span>FLE</span>
+            <span>Collaboratif</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="assets/escapara-1.jpg" alt="ESCAPARA" onerror="this.parentElement.style.background='linear-gradient(135deg,#06B6D4,#0D7FFF)'">
+              </div>
+            </div>
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+            </div>
+          </div>
+          <div class="project-header">
+            <h3>ESCAPARA</h3>
+            <span class="project-badge">Escape game</span>
+          </div>
+          <p>Escape game pédagogique numérique conçu pour la révision de la parasitologie auprès des étudiants en pharmacie.</p>
+          <div class="project-skills">
+            <span>Gamification</span>
+            <span>Santé</span>
+            <span>Évaluation</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="assets/declame-1.jpg" alt="DECLAME'FLE" onerror="this.parentElement.style.background='linear-gradient(135deg,#7C3AED,#0D7FFF)'">
+              </div>
+            </div>
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+            </div>
+          </div>
+          <div class="project-header">
+            <h3>DECLAME'FLE</h3>
+            <span class="project-badge">Label européen 2023</span>
+          </div>
+          <p>Responsable pédagogique du projet et du MOOC en didactique des langues récompensé par le Label européen des langues 2023.</p>
+          <div class="project-skills">
+            <span>MOOC</span>
+            <span>FLE</span>
+            <span>Storytelling</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COMPÉTENCES – CONSTELLATION
+       ============================================================ -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2 class="reveal">Compétences</h2>
+      <p class="section-intro reveal">
+        Survolez un nœud pour explorer les connexions entre mes domaines d'expertise.
+      </p>
+
+      <div class="constellation-wrapper">
+        <svg id="constellation-svg" class="constellation-svg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
+        <div id="constellation-nodes" class="constellation-nodes"></div>
+      </div>
+
+      <div class="skills-grid reveal">
+        <div class="skill-category">
+          <h3>Ingénierie pédagogique</h3>
+          <div class="skill-tags">
+            <span>Formation hybride</span><span>MOOC</span><span>LMS</span>
+            <span>Scénarisation</span><span>Évaluation formative</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Outils numériques</h3>
+          <div class="skill-tags">
+            <span>Moodle</span><span>H5P</span><span>Articulate Storyline</span>
+            <span>WorkAdventure</span><span>Canva</span><span>Genially</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Recherche</h3>
+          <div class="skill-tags">
+            <span>Corpus linguistiques</span><span>Serious games</span>
+            <span>Didactique FLE</span><span>IA générative</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Gestion de projet</h3>
+          <div class="skill-tags">
+            <span>Pilotage</span><span>Coordination</span>
+            <span>Formation formateurs</span><span>Accompagnement</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RECHERCHE
+       ============================================================ -->
+  <section id="research" class="section section-light">
+    <div class="container">
+      <h2 class="reveal">Recherche</h2>
+
+      <div class="research-featured reveal">
+        <h3>Doctorat en cours</h3>
+        <p class="research-meta">Laboratoire LIDILE – Nantes Université</p>
+        <p>Corpus linguistiques et serious games : convergences méthodologiques et numériques pour la didactique des langues.</p>
+      </div>
+
+      <div class="research-grid reveal">
+        <div class="research-item">
+          <h4>Publication 2024</h4>
+          <p>Hervé-Pécot, F., Ramella, D., Richard, E. — De l'EIAH à l'escape game pédagogique en ligne : une pratique numérique qui favorise les interactions en langues.</p>
+        </div>
+        <div class="research-item">
+          <h4>Communication</h4>
+          <p>Ramella, D., Richard, E. — Un corpus linguistique pour décrire l'espace dans un monde virtuel 3D.</p>
+        </div>
+        <div class="research-item">
+          <h4>Label européen</h4>
+          <p>Label européen des langues 2023 — Projet DECLAME'FLE, MOOC de didactique des langues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section id="contact" class="section">
+    <div class="container container-sm">
+      <h2 class="reveal">Contact</h2>
+
+      <div class="contact-grid reveal">
+        <a href="mailto:dolly.ramella@univ-nantes.fr" class="contact-card">
+          <span class="contact-emoji">📧</span>
+          <h3>Email</h3>
+          <p>dolly.ramella@univ-nantes.fr</p>
+        </a>
+        <a href="https://perso.univ-rennes2.fr/dolly.ramella-georget" target="_blank" class="contact-card">
+          <span class="contact-emoji">🌐</span>
+          <h3>Site web</h3>
+          <p>Univ. Rennes 2</p>
+        </a>
+        <a href="#" class="contact-card">
+          <span class="contact-emoji">💼</span>
+          <h3>LinkedIn</h3>
+          <p>Ajouter votre URL</p>
         </a>
       </div>
-    </section>
-  </header>
 
-  <section id="about">
-    <h2>À propos</h2>
-    <p>
-      Je suis ingénieure de formation et ingénieure pédagogique numérique à Nantes Université.
-      Doctorante au laboratoire LIDILE, mes travaux de recherche portent sur les liens entre
-      corpus linguistiques, serious games et apprentissage des langues.
-    </p>
-    <p>
-      Mon activité se situe à l'interface entre innovation pédagogique,
-      technologies éducatives, gestion de projet et recherche.
-    </p>
-  </section>
+      <p class="contact-location">📍 Nantes, France</p>
 
-  <section id="experience">
-    <h2>Expériences professionnelles</h2>
-
-    <div class="card">
-      <h3>Nantes Université</h3>
-      <span class="date">2025 - Aujourd'hui</span>
-      <h4>Ingénieure de formation &amp; Ingénieure pédagogique numérique</h4>
-      <p>
-        Conception et déploiement de formations hybrides et à distance,
-        accompagnement des enseignants, gestion de projets numériques,
-        développement de ressources pédagogiques innovantes.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Université Rennes 2</h3>
-      <span class="date">2021 - 2025</span>
-      <h4>Cheffe de projet numérique &amp; Ingénieure pédagogique</h4>
-      <p>
-        Pilotage de projets numériques innovants dans le cadre du programme AIR.
-        Conception d'environnements immersifs d'apprentissage et développement
-        de dispositifs de formation à distance.
-      </p>
+      <div class="rating-prompt">
+        <p>Ce portfolio vous a été utile ?</p>
+        <div class="stars">
+          <span class="star" data-value="1">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star" data-value="5">★</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="projects">
-    <h2>Projets phares</h2>
-
-    <div class="project-card">
-      <h3>Rennes2D</h3>
-      <p>
-        Monde virtuel développé sur WorkAdventure permettant
-        l'apprentissage des langues et les interactions à distance.
-      </p>
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <p><strong>Dolly Ramella</strong></p>
+      <p class="footer-meta">© 2026 · Ingénieure pédagogique numérique · Nantes Université</p>
     </div>
-
-    <div class="project-card">
-      <h3>ESCAPARA</h3>
-      <p>
-        Escape game pédagogique numérique conçu pour la révision
-        de la parasitologie auprès des étudiants en pharmacie.
-      </p>
-    </div>
-
-    <div class="project-card">
-      <h3>DECLAME'FLE</h3>
-      <p>
-        Responsable pédagogique du projet et du MOOC
-        en didactique des langues récompensé par le
-        Label européen des langues 2023.
-      </p>
-    </div>
-  </section>
-
-  <section id="research">
-    <h2>Recherche</h2>
-
-    <div class="card">
-      <h3>Doctorat</h3>
-      <p>Laboratoire LIDILE – Nantes Université</p>
-      <p>
-        Corpus linguistiques et serious games :
-        convergences méthodologiques et numériques
-        pour la didactique des langues.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Publications</h3>
-      <ul>
-        <li>
-          Hervé-Pécot, F., Ramella, D., Richard, E. (2024).
-          De l'EIAH à l'escape game pédagogique en ligne :
-          une pratique numérique qui favorise les interactions en langues.
-        </li>
-        <li>
-          Ramella, D., Richard, E.
-          Un corpus linguistique pour décrire l'espace
-          dans un monde virtuel 3D.
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       SECTION COMPÉTENCES — Constellation interactive
-       ══════════════════════════════════════════ -->
-  <section id="skills">
-    <h2>Compétences</h2>
-    <p class="skills-subtitle">Survolez une compétence pour en savoir plus · Cliquez pour filtrer par catégorie</p>
-
-    <div class="constellation-wrapper" id="constellation-wrapper">
-      <canvas id="constellation-lines"></canvas>
-      <div class="nodes-layer" id="constellation-nodes"></div>
-    </div>
-
-    <div class="skills-legend" id="skills-legend"></div>
-  </section>
-
-  <div class="skills-tooltip" id="skills-tooltip"></div>
-  <!-- ══════════════════════════════════════════ -->
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>📧 dolly.ramella@univ-nantes.fr</p>
-    <p>🌐 https://perso.univ-rennes2.fr/dolly.ramella-georget</p>
-    <p>💼 LinkedIn : Ajouter votre URL</p>
-  </section>
-
-  <footer>
-    <p>© 2026 Dolly Ramella</p>
   </footer>
 
   <script src="script.js"></script>
-
-  <!-- ══════════════════════════════════════════
-       SCRIPT CONSTELLATION
-       ══════════════════════════════════════════ -->
-  <script>
-  (function () {
-    const skills = [
-      // Pédagogie
-      { label: "Ingénierie pédagogique", cat: "pédagogie", desc: "Conception de dispositifs de formation innovants, sur mesure et centrés sur l'apprenant.", x: 50, y: 18 },
-      { label: "Formation hybride",      cat: "pédagogie", desc: "Articulation des modalités présentielle et distancielle pour une expérience cohérente.", x: 22, y: 30 },
-      { label: "MOOC",                   cat: "pédagogie", desc: "Responsable pédagogique du MOOC DECLAME'FLE, lauréat du Label européen des langues 2023.", x: 76, y: 28 },
-      { label: "Scénarisation",          cat: "pédagogie", desc: "Écriture de scénarios pédagogiques et storyboards pour modules e-learning.", x: 14, y: 52 },
-      { label: "Didactique des langues", cat: "pédagogie", desc: "Spécialiste de l'enseignement/apprentissage des langues via le numérique et les serious games.", x: 85, y: 50 },
-      // Numérique
-      { label: "Digital Learning",        cat: "numérique", desc: "Conception et déploiement de parcours e-learning complets, de l'analyse au déploiement.", x: 32, y: 68 },
-      { label: "Mondes virtuels",         cat: "numérique", desc: "Création de Rennes2D sur WorkAdventure : espace immersif pour l'apprentissage et la collaboration.", x: 68, y: 68 },
-      { label: "Escape game pédagogique", cat: "numérique", desc: "Conception d'ESCAPARA, escape game numérique pour la révision en pharmacie.", x: 20, y: 82 },
-      { label: "IA générative",           cat: "numérique", desc: "Intégration d'outils d'IA dans les pratiques pédagogiques et les workflows de conception.", x: 80, y: 80 },
-      // Outils
-      { label: "Articulate Storyline", cat: "outils", desc: "Création de modules e-learning interactifs avec animations et évaluations.", x: 40, y: 88 },
-      { label: "Moodle / LMS",         cat: "outils", desc: "Administration, structuration et suivi de formations sur plateformes LMS.", x: 60, y: 88 },
-      { label: "Canva",                cat: "outils", desc: "Design de supports visuels pédagogiques clairs et attractifs.", x: 8,  y: 70 },
-      { label: "WorkAdventure",        cat: "outils", desc: "Développement de campus virtuels 2D pour les interactions à distance.", x: 92, y: 65 },
-      // Recherche
-      { label: "Gestion de projet",    cat: "recherche", desc: "Pilotage de projets numériques complexes (AIR, Rennes2D, ESCAPARA).", x: 50, y: 50 },
-      { label: "Corpus linguistiques", cat: "recherche", desc: "Travaux doctoraux sur les corpus pour décrire les interactions dans les mondes virtuels.", x: 30, y: 42 },
-      { label: "Serious games",        cat: "recherche", desc: "Recherche sur la convergence méthodologique entre jeu sérieux et didactique.", x: 70, y: 42 },
-      { label: "Publications",         cat: "recherche", desc: "Co-auteure de travaux sur les EIAH, escape games et corpus linguistiques (LIDILE).", x: 50, y: 35 },
-    ];
-
-    const catColors = {
-      pédagogie: "#7c9fff",
-      numérique: "#b8f0e0",
-      recherche:  "#f0c8a0",
-      outils:     "#d4a8ff",
-    };
-
-    const catLabels = {
-      pédagogie: "Pédagogie",
-      numérique: "Numérique",
-      recherche:  "Recherche",
-      outils:     "Outils",
-    };
-
-    const connections = [
-      [0,16],[0,15],[0,1],[0,2],[0,6],[0,7],
-      [1,3],[1,15],[2,9],[2,4],
-      [3,11],[4,6],[4,10],
-      [5,9],[5,11],[5,6],[5,7],
-      [6,12],[7,8],[8,11],
-      [13,0],[13,5],[13,14],[13,15],[13,16],
-      [14,16],[15,16],[16,2],[10,13],[9,5],
-    ];
-
-    const wrapper = document.getElementById('constellation-wrapper');
-    const nodesEl = document.getElementById('constellation-nodes');
-    const canvas  = document.getElementById('constellation-lines');
-    const ctx     = canvas.getContext('2d');
-    const tooltip = document.getElementById('skills-tooltip');
-    const legendEl= document.getElementById('skills-legend');
-
-    let activeCategory = null;
-    let nodeEls = [];
-
-    function buildLegend() {
-      Object.entries(catLabels).forEach(([cat, label]) => {
-        const item = document.createElement('div');
-        item.className = 'legend-item';
-        item.innerHTML = '<div class="legend-dot" style="background:' + catColors[cat] + '"></div>' + label;
-        item.addEventListener('click', function () {
-          activeCategory = (activeCategory === cat) ? null : cat;
-          updateActive();
-          drawLines();
-        });
-        legendEl.appendChild(item);
-      });
-    }
-
-    function buildNodes() {
-      skills.forEach(function (s, i) {
-        const el = document.createElement('div');
-        el.className = 'skill-node';
-        el.dataset.cat = s.cat;
-        el.style.left = s.x + '%';
-        el.style.top  = s.y + '%';
-
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
-        bubble.textContent = s.label;
-        el.appendChild(bubble);
-
-        el.addEventListener('mouseenter', function (e) { showTooltip(e, s); });
-        el.addEventListener('mousemove',  function (e) { moveTooltip(e); });
-        el.addEventListener('mouseleave', hideTooltip);
-        el.addEventListener('click', function () {
-          activeCategory = (activeCategory === s.cat) ? null : s.cat;
-          updateActive();
-          drawLines();
-        });
-
-        nodesEl.appendChild(el);
-        nodeEls.push(el);
-      });
-    }
-
-    function updateActive() {
-      nodeEls.forEach(function (el, i) {
-        if (!activeCategory || skills[i].cat === activeCategory) {
-          el.classList.add('active');
-        } else {
-          el.classList.remove('active');
-        }
-      });
-    }
-
-    function getNodeCenter(i) {
-      const el = nodeEls[i];
-      const wr = wrapper.getBoundingClientRect();
-      const nr = el.getBoundingClientRect();
-      return {
-        x: nr.left + nr.width  / 2 - wr.left,
-        y: nr.top  + nr.height / 2 - wr.top,
-      };
-    }
-
-    function drawLines() {
-      const W = wrapper.offsetWidth;
-      const H = wrapper.offsetHeight;
-      canvas.width  = W;
-      canvas.height = H;
-      ctx.clearRect(0, 0, W, H);
-
-      connections.forEach(function (pair) {
-        const a = pair[0], b = pair[1];
-        const ca = skills[a].cat;
-        const cb = skills[b].cat;
-        const relA = !activeCategory || ca === activeCategory;
-        const relB = !activeCategory || cb === activeCategory;
-        if (!relA && !relB) return;
-
-        const pa = getNodeCenter(a);
-        const pb = getNodeCenter(b);
-
-        ctx.beginPath();
-        ctx.moveTo(pa.x, pa.y);
-        ctx.lineTo(pb.x, pb.y);
-        ctx.strokeStyle = (relA && relB) ? catColors[ca] : 'rgba(150,150,180,1)';
-        ctx.globalAlpha = (relA && relB) ? 0.3 : 0.08;
-        ctx.lineWidth   = 1;
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-      });
-
-      // Étoiles d'ambiance
-      ctx.fillStyle = 'rgba(180,190,255,0.35)';
-      [[120,40],[350,20],[590,80],[50,180],[640,150],[200,490],[500,470],[100,380],[650,350]].forEach(function (s) {
-        ctx.beginPath();
-        ctx.arc(s[0] * W / 700, s[1] * H / 525, 1.2, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
-
-    function showTooltip(e, s) {
-      tooltip.innerHTML = '<strong>' + s.label + '</strong>' + s.desc;
-      tooltip.classList.add('visible');
-      moveTooltip(e);
-    }
-
-    function moveTooltip(e) {
-      var pad = 16;
-      var left = e.clientX + pad;
-      var top  = e.clientY + pad;
-      if (left + 240 > window.innerWidth)  left = e.clientX - 240 - pad;
-      if (top  + 110 > window.innerHeight) top  = e.clientY - 110 - pad;
-      tooltip.style.left = left + 'px';
-      tooltip.style.top  = top  + 'px';
-    }
-
-    function hideTooltip() {
-      tooltip.classList.remove('visible');
-    }
-
-    function init() {
-      buildLegend();
-      buildNodes();
-      updateActive();
-      requestAnimationFrame(drawLines);
-    }
-
-    window.addEventListener('resize', function () {
-      requestAnimationFrame(drawLines);
-    });
-
-    // Attendre que la page soit prête
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
-    }
-  })();
-  </script>
-  <!-- ══════════════════════════════════════════ -->
 
 </body>
 </html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constellation de Compétences</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F9F7F4;
+      color: #0A1428;
+    }
+
+    .constellation-section {
+      padding: 6rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .constellation-section h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #0A1428 0%, #0D7FFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .section-intro {
+      color: #5A6B7D;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      max-width: 700px;
+    }
+
+    .constellation-container {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .constellation-wrapper {
+      position: relative;
+      background: linear-gradient(135deg, rgba(13, 127, 255, 0.08), rgba(124, 58, 237, 0.06));
+      border: 1px solid #E0DCD6;
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 700px;
+    }
+
+    #constellation-svg {
+      width: 100%;
+      height: 100%;
+      min-height: 700px;
+    }
+
+    .node {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .node-circle {
+      filter: drop-shadow(0 4px 12px rgba(13, 127, 255, 0.2));
+      transition: all 0.3s ease;
+    }
+
+    .node-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-anchor: middle;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .node.primary .node-circle {
+      filter: drop-shadow(0 8px 24px rgba(13, 127, 255, 0.35));
+    }
+
+    .node.primary .node-label {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .node.active .node-circle {
+      filter: drop-shadow(0 0 40px currentColor) !important;
+    }
+
+    .node.dimmed .node-circle {
+      opacity: 0.3;
+    }
+
+    .node.dimmed .node-label {
+      opacity: 0.3;
+    }
+
+    .link {
+      stroke: #0D7FFF;
+      stroke-opacity: 0.2;
+      fill: none;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .link.active {
+      stroke-opacity: 1;
+      stroke-width: 2.5;
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+
+    .link.dimmed {
+      stroke-opacity: 0.05;
+    }
+
+    /* Info Panel */
+    .info-panel {
+      background: white;
+      border: 1px solid #E0DCD6;
+      border-radius: 12px;
+      padding: 1.5rem;
+      height: 100%;
+      overflow-y: auto;
+      position: sticky;
+      top: 80px;
+    }
+
+    .info-panel.hidden {
+      display: none;
+    }
+
+    .info-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid #E0DCD6;
+    }
+
+    .info-icon {
+      font-size: 2rem;
+    }
+
+    .info-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0A1428;
+      margin: 0;
+    }
+
+    .info-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      background: rgba(13, 127, 255, 0.1);
+      color: #0D7FFF;
+      border-radius: 50px;
+      margin-top: 0.5rem;
+    }
+
+    .info-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .info-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #0D7FFF;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
+
+    .info-description {
+      font-size: 0.9rem;
+      color: #5A6B7D;
+      line-height: 1.6;
+    }
+
+    .info-example {
+      background: #F9F7F4;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: #2D3748;
+      border-left: 3px solid #0D7FFF;
+      font-style: italic;
+    }
+
+    .skill-list {
+      list-style: none;
+    }
+
+    .skill-list li {
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      color: #5A6B7D;
+      border-bottom: 1px solid #EDE9E1;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .skill-list li:last-child {
+      border: none;
+    }
+
+    .skill-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #0D7FFF;
+      font-weight: bold;
+    }
+
+    .project-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      background: rgba(124, 58, 237, 0.1);
+      color: #7C3AED;
+      border-radius: 50px;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .close-btn {
+      display: none;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #0A1428;
+    }
+
+    @media (max-width: 1024px) {
+      .constellation-container {
+        grid-template-columns: 1fr;
+      }
+
+      .info-panel {
+        position: static;
+        top: auto;
+      }
+
+      #constellation-svg {
+        min-height: 500px;
+      }
+
+      .close-btn {
+        display: block;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .constellation-section {
+        padding: 4rem 1rem;
+      }
+
+      .constellation-wrapper {
+        min-height: 400px;
+      }
+
+      #constellation-svg {
+        min-height: 400px;
+      }
+
+      .info-panel {
+        margin-top: 2rem;
+      }
+    }
+
+    /* Scrollbar */
+    .info-panel::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .info-panel::-webkit-scrollbar-track {
+      background: #F9F7F4;
+    }
+
+    .info-panel::-webkit-scrollbar-thumb {
+      background: #0D7FFF;
+      border-radius: 3px;
+    }
+
+    .info-panel::-webkit-scrollbar-thumb:hover {
+      background: #8B5CF6;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="constellation-section">
+    <h2>Compétences &amp; Constellation</h2>
+    <p class="section-intro">Explorez une carte interactive de mes domaines d'expertise. Cliquez sur une compétence pour découvrir ses détails, ses applications et les projets associés.</p>
+
+    <div class="constellation-container">
+      <div class="constellation-wrapper">
+        <svg id="constellation-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="info-panel hidden" id="info-panel">
+        <button class="close-btn" id="close-btn">×</button>
+        <div id="panel-content"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- D3.js Library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Constellation Data & Script -->
+  <script src="constellation-data.js"></script>
+  <script src="constellation.js"></script>
+
+</body>
+</html>

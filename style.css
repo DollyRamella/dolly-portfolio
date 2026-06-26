@@ -1240,3 +1240,23 @@ p {
     transition: none !important;
   }
 }
+/* ============================================================
+   CONSTELLATION — styles canvas (ajout à la fin du fichier)
+   ============================================================ */
+
+/* Le wrapper doit avoir un fond sombre pour que les bulles
+   et les étoiles soient visibles */
+.constellation-wrapper {
+  background: linear-gradient(135deg, #0e1117 0%, #0A1428 100%) !important;
+  border: 1px solid rgba(13, 127, 255, 0.2) !important;
+}
+
+/* Légende */
+.skills-legend,
+#skills-legend {
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.2rem;
+}

@@ -78,209 +78,276 @@ document.querySelectorAll('.carousel-container').forEach((container) => {
 });
 
 // ============================================================
-// CONSTELLATION — CORRIGÉE
-// Les positions x/y sont en % (0-100) du conteneur.
-// Les nœuds HTML sont placés en % via left/top.
-// Les lignes SVG utilisent le même espace 0-100 via viewBox.
+// CONSTELLATION — logique canvas (référence)
 // ============================================================
 function initConstellation() {
   const wrapper = document.querySelector('.constellation-wrapper');
-  const svg = document.getElementById('constellation-svg');
-  const nodesContainer = document.getElementById('constellation-nodes');
+  if (!wrapper) return;
 
-  if (!wrapper || !svg || !nodesContainer) return;
+  // ── 1. Injecter le canvas + la couche de nœuds dans le wrapper ──
+  wrapper.style.position = 'relative';
+  wrapper.style.overflow = 'hidden';
 
-  // Positions en % (x: 0-100, y: 0-100) du conteneur
+  // Supprimer l'ancien SVG et l'ancien conteneur de nœuds s'ils existent
+  const oldSvg = document.getElementById('constellation-svg');
+  const oldNodes = document.getElementById('constellation-nodes');
+  if (oldSvg) oldSvg.remove();
+  if (oldNodes) oldNodes.remove();
+
+  const canvas = document.createElement('canvas');
+  canvas.id = 'constellation-canvas';
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
+  wrapper.appendChild(canvas);
+
+  const nodesLayer = document.createElement('div');
+  nodesLayer.id = 'constellation-nodes-layer';
+  nodesLayer.style.cssText = 'position:absolute;inset:0;';
+  wrapper.appendChild(nodesLayer);
+
+  // Tooltip partagé
+  let tooltip = document.getElementById('constellation-tooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.id = 'constellation-tooltip';
+    tooltip.style.cssText = [
+      'position:fixed',
+      'background:#1A2D52',
+      'border:1px solid #3a4460',
+      'border-radius:10px',
+      'padding:0.8rem 1.1rem',
+      'font-size:0.78rem',
+      'font-family:Inter,sans-serif',
+      'color:#e8eaf6',
+      'max-width:220px',
+      'pointer-events:none',
+      'opacity:0',
+      'transition:opacity 0.2s',
+      'z-index:2000',
+      'box-shadow:0 8px 32px rgba(0,0,0,0.4)',
+      'line-height:1.5',
+    ].join(';');
+    document.body.appendChild(tooltip);
+  }
+
+  // ── 2. Légende cliquable ──
+  const legendEl = document.getElementById('skills-legend') || document.querySelector('.skills-legend');
+
+  const catColors = {
+    pédagogie: '#7c9fff',
+    numérique: '#b8f0e0',
+    recherche:  '#f0c8a0',
+    outils:     '#d4a8ff',
+  };
+  const catLabels = {
+    pédagogie: 'Pédagogie',
+    numérique: 'Numérique',
+    recherche:  'Recherche',
+    outils:     'Outils',
+  };
+
+  if (legendEl && legendEl.children.length === 0) {
+    Object.entries(catLabels).forEach(([cat, label]) => {
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.style.cssText = 'display:flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:#7a8ab0;cursor:pointer;transition:opacity 0.2s;font-family:Inter,sans-serif;';
+      item.innerHTML = `<div style="width:9px;height:9px;border-radius:50%;background:${catColors[cat]};flex-shrink:0;"></div>${label}`;
+      item.addEventListener('click', () => {
+        activeCategory = (activeCategory === cat) ? null : cat;
+        updateActive();
+        drawLines();
+      });
+      legendEl.appendChild(item);
+    });
+  }
+
+  // ── 3. Données compétences (positions en %) ──
   const skills = [
-    // Centre
-    { id: 'pedagogie',       label: 'Ingénierie\npédagogique',      x: 50,  y: 50  },
-
-    // 1er anneau
-    { id: 'gamification',    label: 'Gamification\n& Jeux',          x: 20,  y: 28  },
-    { id: 'mondes-virtuels', label: 'Mondes\nvirtualels',             x: 80,  y: 28  },
-    { id: 'fle',             label: 'Didactique\nFLE',                x: 15,  y: 64  },
-    { id: 'mooc',            label: 'MOOC\n& REL',                   x: 50,  y: 21  },
-    { id: 'corpus',          label: 'Recherche\nCorpus',              x: 85,  y: 64  },
-
-    // 2e anneau
-    { id: 'escape-games',    label: 'Escape\nGames',                  x: 10,  y: 43  },
-    { id: 'serious-games',   label: 'Serious\nGames',                 x: 90,  y: 43  },
-    { id: 'storytelling',    label: 'Storytelling\nPédagogique',      x: 30,  y: 14  },
-    { id: 'design-ux',       label: 'Design\nUX/UI',                  x: 70,  y: 14  },
-
-    // 3e anneau
-    { id: 'moodle',          label: 'Moodle\nLMS',                   x: 35,  y: 79  },
-    { id: 'h5p',             label: 'H5P\nGenially',                  x: 65,  y: 79  },
-    { id: 'workadventure',   label: 'WorkAdventure\n3D',              x: 8,   y: 79  },
-    { id: 'numerique',       label: 'Innovation\nNumérique',          x: 92,  y: 79  },
-
-    // Anneau extérieur
-    { id: 'gestion-projet',  label: 'Gestion\nde Projet',             x: 20,  y: 86  },
-    { id: 'evaluation',      label: 'Évaluation\nFormative',          x: 45,  y: 93  },
-    { id: 'formation',       label: 'Formation\nFormateurs',          x: 55,  y: 93  },
-    { id: 'recherche-action',label: 'Recherche\nAction',              x: 80,  y: 86  },
-    { id: 'collaboratif',    label: 'Apprentissage\nCollaboratif',    x: 25,  y: 7   },
-    { id: 'immersif',        label: 'Environnements\nImmersifs',      x: 75,  y: 7   },
+    { label: 'Ingénierie pédagogique',  cat: 'pédagogie', desc: "Conception de dispositifs de formation innovants, sur mesure et centrés sur l'apprenant.", x: 50, y: 18 },
+    { label: 'Formation hybride',        cat: 'pédagogie', desc: 'Articulation des modalités présentielle et distancielle pour une expérience cohérente.', x: 22, y: 30 },
+    { label: 'MOOC & REL',              cat: 'pédagogie', desc: "Responsable pédagogique du MOOC DECLAME'FLE, lauréat du Label européen des langues 2023.", x: 76, y: 28 },
+    { label: 'Scénarisation',            cat: 'pédagogie', desc: 'Écriture de scénarios pédagogiques et storyboards pour modules e-learning.', x: 14, y: 52 },
+    { label: 'Didactique des langues',   cat: 'pédagogie', desc: "Spécialiste de l'enseignement/apprentissage des langues via le numérique et les serious games.", x: 85, y: 50 },
+    { label: 'Digital Learning',         cat: 'numérique', desc: "Conception et déploiement de parcours e-learning complets, de l'analyse au déploiement.", x: 32, y: 68 },
+    { label: 'Mondes virtuels',          cat: 'numérique', desc: 'Création de Rennes2D sur WorkAdventure : espace immersif pour l'apprentissage et la collaboration.', x: 68, y: 68 },
+    { label: 'Escape game pédagogique',  cat: 'numérique', desc: "Conception d'ESCAPARA, escape game numérique pour la révision en pharmacie.", x: 20, y: 82 },
+    { label: 'IA générative',            cat: 'numérique', desc: 'Intégration d'outils d'IA dans les pratiques pédagogiques et les workflows de conception.', x: 80, y: 80 },
+    { label: 'Articulate Storyline',     cat: 'outils',    desc: 'Création de modules e-learning interactifs avec animations et évaluations.', x: 40, y: 90 },
+    { label: 'Moodle / LMS',            cat: 'outils',    desc: 'Administration, structuration et suivi de formations sur plateformes LMS.', x: 60, y: 90 },
+    { label: 'Canva',                   cat: 'outils',    desc: 'Design de supports visuels pédagogiques clairs et attractifs.', x: 8,  y: 70 },
+    { label: 'WorkAdventure',           cat: 'outils',    desc: 'Développement de campus virtuels 2D pour les interactions à distance.', x: 92, y: 65 },
+    { label: 'Gestion de projet',        cat: 'recherche', desc: 'Pilotage de projets numériques complexes (AIR, Rennes2D, ESCAPARA).', x: 50, y: 50 },
+    { label: 'Corpus linguistiques',     cat: 'recherche', desc: 'Travaux doctoraux sur les corpus pour décrire les interactions dans les mondes virtuels.', x: 30, y: 42 },
+    { label: 'Serious games',            cat: 'recherche', desc: 'Recherche sur la convergence méthodologique entre jeu sérieux et didactique.', x: 70, y: 42 },
+    { label: 'Publications',             cat: 'recherche', desc: 'Co-auteure de travaux sur les EIAH, escape games et corpus linguistiques (LIDILE).', x: 50, y: 35 },
   ];
 
   const connections = [
-    { from: 'pedagogie', to: 'gamification' },
-    { from: 'pedagogie', to: 'mondes-virtuels' },
-    { from: 'pedagogie', to: 'mooc' },
-    { from: 'pedagogie', to: 'fle' },
-    { from: 'pedagogie', to: 'corpus' },
-    { from: 'pedagogie', to: 'gestion-projet' },
-    { from: 'pedagogie', to: 'evaluation' },
-    { from: 'pedagogie', to: 'formation' },
-    { from: 'gamification', to: 'escape-games' },
-    { from: 'gamification', to: 'serious-games' },
-    { from: 'gamification', to: 'fle' },
-    { from: 'gamification', to: 'design-ux' },
-    { from: 'gamification', to: 'storytelling' },
-    { from: 'mondes-virtuels', to: 'workadventure' },
-    { from: 'mondes-virtuels', to: 'immersif' },
-    { from: 'mondes-virtuels', to: 'corpus' },
-    { from: 'mondes-virtuels', to: 'collaboratif' },
-    { from: 'fle', to: 'escape-games' },
-    { from: 'fle', to: 'storytelling' },
-    { from: 'fle', to: 'corpus' },
-    { from: 'fle', to: 'formation' },
-    { from: 'mooc', to: 'moodle' },
-    { from: 'mooc', to: 'h5p' },
-    { from: 'mooc', to: 'evaluation' },
-    { from: 'mooc', to: 'collaboratif' },
-    { from: 'corpus', to: 'serious-games' },
-    { from: 'corpus', to: 'recherche-action' },
-    { from: 'escape-games', to: 'design-ux' },
-    { from: 'escape-games', to: 'evaluation' },
-    { from: 'serious-games', to: 'storytelling' },
-    { from: 'serious-games', to: 'numerique' },
-    { from: 'workadventure', to: 'immersif' },
-    { from: 'workadventure', to: 'collaboratif' },
-    { from: 'storytelling', to: 'formation' },
-    { from: 'design-ux', to: 'immersif' },
-    { from: 'moodle', to: 'evaluation' },
-    { from: 'h5p', to: 'gamification' },
-    { from: 'numerique', to: 'immersif' },
-    { from: 'gestion-projet', to: 'formation' },
-    { from: 'formation', to: 'recherche-action' },
-    { from: 'collaboratif', to: 'immersif' },
+    [0,16],[0,15],[0,1],[0,2],[0,6],[0,7],
+    [1,3],[1,15],[2,9],[2,4],
+    [3,11],[4,6],[4,10],
+    [5,9],[5,11],[5,6],[5,7],
+    [6,12],[7,8],[8,11],
+    [13,0],[13,5],[13,14],[13,15],[13,16],
+    [14,16],[15,16],[16,2],[10,13],[9,5],
   ];
 
-  // SVG : viewBox 0 0 100 100 pour que les % collent directement
-  svg.setAttribute('viewBox', '0 0 100 100');
-  svg.setAttribute('preserveAspectRatio', 'none');
+  // ── 4. Créer les nœuds (bulles pill comme la référence) ──
+  let activeCategory = null;
+  let nodeEls = [];
 
-  // Dessiner les lignes
-  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  skills.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.style.cssText = 'position:absolute;transform:translate(-50%,-50%);cursor:pointer;transition:transform 0.2s ease;';
+    el.dataset.cat = s.cat;
+    el.dataset.i   = i;
+    el.style.left  = s.x + '%';
+    el.style.top   = s.y + '%';
 
-  connections.forEach((conn) => {
-    const from = skills.find((s) => s.id === conn.from);
-    const to   = skills.find((s) => s.id === conn.to);
-    if (!from || !to) return;
+    const bubble = document.createElement('div');
+    bubble.textContent = s.label;
+    bubble.style.cssText = [
+      'background:#1A2D52',
+      `border:1.5px solid ${catColors[s.cat]}`,
+      'border-radius:999px',
+      'padding:0.45em 1.1em',
+      'font-size:0.75rem',
+      'font-weight:500',
+      'font-family:Inter,sans-serif',
+      'color:#e8eaf6',
+      'white-space:nowrap',
+      'transition:background 0.25s,box-shadow 0.25s,color 0.25s',
+      'user-select:none',
+    ].join(';');
+    el.appendChild(bubble);
 
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', from.x);
-    line.setAttribute('y1', from.y);
-    line.setAttribute('x2', to.x);
-    line.setAttribute('y2', to.y);
-    line.setAttribute('stroke', '#0D7FFF');
-    line.setAttribute('stroke-width', '0.4');
-    line.setAttribute('class', `connection connection-${conn.from} connection-${conn.to}`);
-    line.setAttribute('opacity', '0.25');
-    g.appendChild(line);
+    el.addEventListener('mouseenter', (e) => {
+      el.style.transform = 'translate(-50%,-50%) scale(1.1)';
+      bubble.style.boxShadow = `0 0 18px ${catColors[s.cat]},0 0 36px ${catColors[s.cat]}44`;
+      showTooltip(e, s);
+      drawLines();
+    });
+    el.addEventListener('mousemove', moveTooltip);
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'translate(-50%,-50%)';
+      bubble.style.boxShadow = '';
+      hideTooltip();
+    });
+    el.addEventListener('click', () => {
+      activeCategory = (activeCategory === s.cat) ? null : s.cat;
+      updateActive();
+      drawLines();
+    });
+
+    nodesLayer.appendChild(el);
+    nodeEls.push({ el, bubble });
   });
 
-  svg.appendChild(g);
-
-  // Taille des nœuds en px selon la taille du wrapper
-  function getNodeSize() {
-    const w = wrapper.offsetWidth;
-    if (w < 480) return 72;
-    if (w < 768) return 88;
-    return 108;
-  }
-
-  // Créer les nœuds HTML positionnés en %
-  skills.forEach((skill) => {
-    const node = document.createElement('div');
-    node.className = 'skill-node';
-    node.id = `node-${skill.id}`;
-    node.textContent = skill.label;
-
-    // Centré sur le point x%,y% via transform
-    node.style.left = `${skill.x}%`;
-    node.style.top  = `${skill.y}%`;
-    node.style.transform = 'translate(-50%, -50%)';
-    node.style.position  = 'absolute';
-
-    node.addEventListener('mouseenter', () => highlightSkill(skill.id));
-    node.addEventListener('mouseleave', () => clearHighlight());
-
-    nodesContainer.appendChild(node);
-  });
-
-  function highlightSkill(skillId) {
-    const node = document.getElementById(`node-${skillId}`);
-    if (node) node.classList.add('active');
-
-    const connectedSkills = new Set([skillId]);
-    const processed = new Set();
-
-    function findConns(id) {
-      if (processed.has(id)) return;
-      processed.add(id);
-      connections.forEach((conn) => {
-        if (conn.from === id && !connectedSkills.has(conn.to)) {
-          connectedSkills.add(conn.to);
-          findConns(conn.to);
-        } else if (conn.to === id && !connectedSkills.has(conn.from)) {
-          connectedSkills.add(conn.from);
-          findConns(conn.from);
-        }
-      });
-    }
-    findConns(skillId);
-
-    // Activer lignes directes
-    connections.forEach((conn) => {
-      if (conn.from === skillId || conn.to === skillId) {
-        const selector = `.connection-${conn.from}.connection-${conn.to}`;
-        document.querySelectorAll(selector).forEach((line) => {
-          line.classList.add('active');
-          line.setAttribute('opacity', '0.9');
-          line.setAttribute('stroke-width', '0.7');
-        });
+  function updateActive() {
+    nodeEls.forEach(({ el, bubble }, i) => {
+      const cat = skills[i].cat;
+      const on  = !activeCategory || cat === activeCategory;
+      if (on) {
+        bubble.style.background  = catColors[cat];
+        bubble.style.color       = '#0A1428';
+        bubble.style.boxShadow   = `0 0 22px ${catColors[cat]}`;
+      } else {
+        bubble.style.background  = '#1A2D52';
+        bubble.style.color       = '#e8eaf6';
+        bubble.style.boxShadow   = '';
       }
     });
+  }
 
-    // Activer nœuds connectés
-    connectedSkills.forEach((id) => {
-      const n = document.getElementById(`node-${id}`);
-      if (n && id !== skillId) n.classList.add('active');
+  // ── 5. Canvas : dessin des lignes ──
+  const ctx = canvas.getContext('2d');
+
+  function getNodeCenter(i) {
+    const el = nodeEls[i].el;
+    const wr = wrapper.getBoundingClientRect();
+    const nr = el.getBoundingClientRect();
+    return {
+      x: nr.left + nr.width  / 2 - wr.left,
+      y: nr.top  + nr.height / 2 - wr.top,
+    };
+  }
+
+  function drawLines() {
+    const W = wrapper.offsetWidth;
+    const H = wrapper.offsetHeight;
+    canvas.width  = W;
+    canvas.height = H;
+    ctx.clearRect(0, 0, W, H);
+
+    connections.forEach(([a, b]) => {
+      const ca = skills[a].cat;
+      const cb = skills[b].cat;
+      const relA = !activeCategory || ca === activeCategory;
+      const relB = !activeCategory || cb === activeCategory;
+      if (!relA && !relB) return;
+
+      const pa = getNodeCenter(a);
+      const pb = getNodeCenter(b);
+
+      ctx.beginPath();
+      ctx.moveTo(pa.x, pa.y);
+      ctx.lineTo(pb.x, pb.y);
+      ctx.strokeStyle = (relA && relB) ? catColors[ca] : 'rgba(150,150,180,1)';
+      ctx.globalAlpha = (relA && relB) ? 0.3 : 0.08;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+
+    // Étoiles d'ambiance
+    ctx.fillStyle = 'rgba(180,190,255,0.35)';
+    [[120,40],[350,20],[590,80],[50,180],[640,150],[200,490],[500,470],[100,380],[650,350]].forEach(([x, y]) => {
+      ctx.beginPath();
+      ctx.arc(x * W / 700, y * H / 525, 1.2, 0, Math.PI * 2);
+      ctx.fill();
     });
   }
 
-  function clearHighlight() {
-    skills.forEach((s) => {
-      const n = document.getElementById(`node-${s.id}`);
-      if (n) n.classList.remove('active');
-    });
-    document.querySelectorAll('.connection').forEach((line) => {
-      line.classList.remove('active');
-      line.setAttribute('opacity', '0.25');
-      line.setAttribute('stroke-width', '0.4');
-    });
+  // ── 6. Tooltip ──
+  function showTooltip(e, s) {
+    tooltip.innerHTML = `<strong style="color:${catColors[s.cat]};display:block;margin-bottom:0.3em;">${s.label}</strong>${s.desc}`;
+    tooltip.style.opacity = '1';
+    moveTooltip(e);
+  }
+  function moveTooltip(e) {
+    const pad  = 16;
+    let left   = e.clientX + pad;
+    let top    = e.clientY + pad;
+    if (left + 240 > window.innerWidth)  left = e.clientX - 240 - pad;
+    if (top  + 110 > window.innerHeight) top  = e.clientY - 110 - pad;
+    tooltip.style.left = left + 'px';
+    tooltip.style.top  = top  + 'px';
+  }
+  function hideTooltip() {
+    tooltip.style.opacity = '0';
   }
 
-  // Redimensionnement : recalculer taille des nœuds si besoin
-  window.addEventListener('resize', () => {
-    const size = getNodeSize();
-    document.querySelectorAll('.skill-node').forEach((n) => {
-      n.style.width  = size + 'px';
-      n.style.height = size + 'px';
-    });
-  });
+  // ── 7. Init & resize ──
+  function init() {
+    requestAnimationFrame(drawLines);
+  }
+
+  window.addEventListener('resize', () => requestAnimationFrame(drawLines));
+
+  // Attendre que le DOM soit rendu pour que getBoundingClientRect soit juste
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    setTimeout(init, 100);
+  }
+
+  // Pulse léger pour faire vivre les lignes
+  let frame = 0;
+  function pulse() {
+    frame++;
+    if (frame % 90 === 0) drawLines();
+    requestAnimationFrame(pulse);
+  }
+  pulse();
 }
 
 initConstellation();

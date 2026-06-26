@@ -65,13 +65,8 @@ document.querySelectorAll('.carousel-container').forEach((container) => {
     });
   }
 
-  prevBtn.addEventListener('click', () => {
-    showSlide(currentSlide - 1);
-  });
-
-  nextBtn.addEventListener('click', () => {
-    showSlide(currentSlide + 1);
-  });
+  prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
 
   indicators.forEach((indicator) => {
     indicator.addEventListener('click', (e) => {
@@ -79,58 +74,56 @@ document.querySelectorAll('.carousel-container').forEach((container) => {
     });
   });
 
-  // Auto-advance every 5 seconds
-  setInterval(() => {
-    showSlide(currentSlide + 1);
-  }, 5000);
+  setInterval(() => showSlide(currentSlide + 1), 5000);
 });
 
 // ============================================================
-// CONSTELLATION - ENHANCED
+// CONSTELLATION — CORRIGÉE
+// Les positions x/y sont en % (0-100) du conteneur.
+// Les nœuds HTML sont placés en % via left/top.
+// Les lignes SVG utilisent le même espace 0-100 via viewBox.
 // ============================================================
 function initConstellation() {
   const wrapper = document.querySelector('.constellation-wrapper');
   const svg = document.getElementById('constellation-svg');
   const nodesContainer = document.getElementById('constellation-nodes');
 
-  if (!svg || !nodesContainer) return;
+  if (!wrapper || !svg || !nodesContainer) return;
 
-  // Define 20 skills with strategic positioning
+  // Positions en % (x: 0-100, y: 0-100) du conteneur
   const skills = [
-    // Core center
-    { id: 'pedagogie', label: 'Ingénierie\npédagogique', x: 500, y: 350, r: 4 },
-    
-    // First ring - major domains
-    { id: 'gamification', label: 'Gamification\n& Jeux', x: 200, y: 200, r: 3 },
-    { id: 'mondes-virtuels', label: 'Mondes\nvirtualels', x: 800, y: 200, r: 3 },
-    { id: 'fle', label: 'Didactique\nFLE', x: 150, y: 450, r: 3 },
-    { id: 'mooc', label: 'MOOC\n& REL', x: 500, y: 150, r: 3 },
-    { id: 'corpus', label: 'Recherche\nCorpus', x: 850, y: 450, r: 3 },
-    
-    // Second ring - supporting skills
-    { id: 'escape-games', label: 'Escape\nGames', x: 100, y: 300, r: 2.5 },
-    { id: 'serious-games', label: 'Serious\nGames', x: 900, y: 300, r: 2.5 },
-    { id: 'storytelling', label: 'Storytelling\nPédagogique', x: 300, y: 100, r: 2.5 },
-    { id: 'design-ux', label: 'Design\nUX/UI', x: 700, y: 100, r: 2.5 },
-    
-    // Third ring - technical skills
-    { id: 'moodle', label: 'Moodle\nLMS', x: 350, y: 550, r: 2 },
-    { id: 'h5p', label: 'H5P\nGenially', x: 650, y: 550, r: 2 },
-    { id: 'workadventure', label: 'WorkAdventure\n3D', x: 80, y: 550, r: 2 },
-    { id: 'numerique', label: 'Innovation\nNumérique', x: 920, y: 550, r: 2 },
-    
-    // Outer ring - supporting competencies
-    { id: 'gestion-projet', label: 'Gestion\nde Projet', x: 200, y: 600, r: 2 },
-    { id: 'evaluation', label: 'Évaluation\nFormative', x: 450, y: 650, r: 2 },
-    { id: 'formation', label: 'Formation\nFormateurs', x: 550, y: 650, r: 2 },
-    { id: 'recherche-action', label: 'Recherche\nAction', x: 800, y: 600, r: 2 },
-    { id: 'collaboratif', label: 'Apprentissage\nCollaboratif', x: 250, y: 50, r: 2 },
-    { id: 'immersif', label: 'Environnements\nImmersifs', x: 750, y: 50, r: 2 },
+    // Centre
+    { id: 'pedagogie',       label: 'Ingénierie\npédagogique',      x: 50,  y: 50  },
+
+    // 1er anneau
+    { id: 'gamification',    label: 'Gamification\n& Jeux',          x: 20,  y: 28  },
+    { id: 'mondes-virtuels', label: 'Mondes\nvirtualels',             x: 80,  y: 28  },
+    { id: 'fle',             label: 'Didactique\nFLE',                x: 15,  y: 64  },
+    { id: 'mooc',            label: 'MOOC\n& REL',                   x: 50,  y: 21  },
+    { id: 'corpus',          label: 'Recherche\nCorpus',              x: 85,  y: 64  },
+
+    // 2e anneau
+    { id: 'escape-games',    label: 'Escape\nGames',                  x: 10,  y: 43  },
+    { id: 'serious-games',   label: 'Serious\nGames',                 x: 90,  y: 43  },
+    { id: 'storytelling',    label: 'Storytelling\nPédagogique',      x: 30,  y: 14  },
+    { id: 'design-ux',       label: 'Design\nUX/UI',                  x: 70,  y: 14  },
+
+    // 3e anneau
+    { id: 'moodle',          label: 'Moodle\nLMS',                   x: 35,  y: 79  },
+    { id: 'h5p',             label: 'H5P\nGenially',                  x: 65,  y: 79  },
+    { id: 'workadventure',   label: 'WorkAdventure\n3D',              x: 8,   y: 79  },
+    { id: 'numerique',       label: 'Innovation\nNumérique',          x: 92,  y: 79  },
+
+    // Anneau extérieur
+    { id: 'gestion-projet',  label: 'Gestion\nde Projet',             x: 20,  y: 86  },
+    { id: 'evaluation',      label: 'Évaluation\nFormative',          x: 45,  y: 93  },
+    { id: 'formation',       label: 'Formation\nFormateurs',          x: 55,  y: 93  },
+    { id: 'recherche-action',label: 'Recherche\nAction',              x: 80,  y: 86  },
+    { id: 'collaboratif',    label: 'Apprentissage\nCollaboratif',    x: 25,  y: 7   },
+    { id: 'immersif',        label: 'Environnements\nImmersifs',      x: 75,  y: 7   },
   ];
 
-  // Define connections - create a rich network
   const connections = [
-    // From pedagogy to main branches
     { from: 'pedagogie', to: 'gamification' },
     { from: 'pedagogie', to: 'mondes-virtuels' },
     { from: 'pedagogie', to: 'mooc' },
@@ -139,37 +132,25 @@ function initConstellation() {
     { from: 'pedagogie', to: 'gestion-projet' },
     { from: 'pedagogie', to: 'evaluation' },
     { from: 'pedagogie', to: 'formation' },
-
-    // Gamification connections
     { from: 'gamification', to: 'escape-games' },
     { from: 'gamification', to: 'serious-games' },
     { from: 'gamification', to: 'fle' },
     { from: 'gamification', to: 'design-ux' },
     { from: 'gamification', to: 'storytelling' },
-
-    // Mondes virtuels connections
     { from: 'mondes-virtuels', to: 'workadventure' },
     { from: 'mondes-virtuels', to: 'immersif' },
     { from: 'mondes-virtuels', to: 'corpus' },
     { from: 'mondes-virtuels', to: 'collaboratif' },
-
-    // FLE connections
     { from: 'fle', to: 'escape-games' },
     { from: 'fle', to: 'storytelling' },
     { from: 'fle', to: 'corpus' },
     { from: 'fle', to: 'formation' },
-
-    // MOOC connections
     { from: 'mooc', to: 'moodle' },
     { from: 'mooc', to: 'h5p' },
     { from: 'mooc', to: 'evaluation' },
     { from: 'mooc', to: 'collaboratif' },
-
-    // Corpus connections
     { from: 'corpus', to: 'serious-games' },
     { from: 'corpus', to: 'recherche-action' },
-
-    // Secondary connections
     { from: 'escape-games', to: 'design-ux' },
     { from: 'escape-games', to: 'evaluation' },
     { from: 'serious-games', to: 'storytelling' },
@@ -186,130 +167,120 @@ function initConstellation() {
     { from: 'collaboratif', to: 'immersif' },
   ];
 
-  // Get SVG dimensions
-  const svgRect = svg.getBoundingClientRect();
-  const svgWidth = svgRect.width || 1000;
-  const svgHeight = svgRect.height || 700;
+  // SVG : viewBox 0 0 100 100 pour que les % collent directement
+  svg.setAttribute('viewBox', '0 0 100 100');
+  svg.setAttribute('preserveAspectRatio', 'none');
 
-  // Draw connections
+  // Dessiner les lignes
   const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  const lines = [];
 
   connections.forEach((conn) => {
     const from = skills.find((s) => s.id === conn.from);
-    const to = skills.find((s) => s.id === conn.to);
+    const to   = skills.find((s) => s.id === conn.to);
+    if (!from || !to) return;
 
-    if (from && to) {
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', from.x);
-      line.setAttribute('y1', from.y);
-      line.setAttribute('x2', to.x);
-      line.setAttribute('y2', to.y);
-      line.setAttribute('stroke', '#0D7FFF');
-      line.setAttribute('stroke-width', '1.5');
-      line.setAttribute('class', `connection connection-${conn.from} connection-${conn.to}`);
-      line.setAttribute('opacity', '0.25');
-      g.appendChild(line);
-      lines.push(line);
-    }
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', from.x);
+    line.setAttribute('y1', from.y);
+    line.setAttribute('x2', to.x);
+    line.setAttribute('y2', to.y);
+    line.setAttribute('stroke', '#0D7FFF');
+    line.setAttribute('stroke-width', '0.4');
+    line.setAttribute('class', `connection connection-${conn.from} connection-${conn.to}`);
+    line.setAttribute('opacity', '0.25');
+    g.appendChild(line);
   });
 
   svg.appendChild(g);
 
-  // Create nodes
+  // Taille des nœuds en px selon la taille du wrapper
+  function getNodeSize() {
+    const w = wrapper.offsetWidth;
+    if (w < 480) return 72;
+    if (w < 768) return 88;
+    return 108;
+  }
+
+  // Créer les nœuds HTML positionnés en %
   skills.forEach((skill) => {
     const node = document.createElement('div');
     node.className = 'skill-node';
     node.id = `node-${skill.id}`;
     node.textContent = skill.label;
-    node.style.left = `${skill.x - 55}px`;
-    node.style.top = `${skill.y - 55}px`;
 
-    // Add event listeners
-    node.addEventListener('mouseenter', () => {
-      highlightSkill(skill.id, skills, connections);
-    });
+    // Centré sur le point x%,y% via transform
+    node.style.left = `${skill.x}%`;
+    node.style.top  = `${skill.y}%`;
+    node.style.transform = 'translate(-50%, -50%)';
+    node.style.position  = 'absolute';
 
-    node.addEventListener('mouseleave', () => {
-      clearHighlight(skills);
-    });
+    node.addEventListener('mouseenter', () => highlightSkill(skill.id));
+    node.addEventListener('mouseleave', () => clearHighlight());
 
     nodesContainer.appendChild(node);
   });
 
-  function highlightSkill(skillId, allSkills, allConnections) {
-    // Activate node
+  function highlightSkill(skillId) {
     const node = document.getElementById(`node-${skillId}`);
     if (node) node.classList.add('active');
 
-    // Find all connected skills
     const connectedSkills = new Set([skillId]);
-    const processedSkills = new Set();
+    const processed = new Set();
 
-    function findConnections(currentSkillId) {
-      if (processedSkills.has(currentSkillId)) return;
-      processedSkills.add(currentSkillId);
-
-      allConnections.forEach((conn) => {
-        if (conn.from === currentSkillId && !connectedSkills.has(conn.to)) {
+    function findConns(id) {
+      if (processed.has(id)) return;
+      processed.add(id);
+      connections.forEach((conn) => {
+        if (conn.from === id && !connectedSkills.has(conn.to)) {
           connectedSkills.add(conn.to);
-          findConnections(conn.to);
-        } else if (conn.to === currentSkillId && !connectedSkills.has(conn.from)) {
+          findConns(conn.to);
+        } else if (conn.to === id && !connectedSkills.has(conn.from)) {
           connectedSkills.add(conn.from);
-          findConnections(conn.from);
+          findConns(conn.from);
         }
       });
     }
+    findConns(skillId);
 
-    findConnections(skillId);
-
-    // Highlight connections
-    const connectionSelectors = Array.from(connectedSkills)
-      .filter((id) => id !== skillId)
-      .map(
-        (id) =>
-          `.connection-${skillId}.connection-${id}, .connection-${id}.connection-${skillId}`
-      )
-      .join(', ');
-
-    if (connectionSelectors) {
-      document.querySelectorAll(connectionSelectors).forEach((conn) => {
-        conn.classList.add('active');
-        conn.setAttribute('opacity', '1');
-      });
-    }
-
-    // Highlight connected nodes
-    connectedSkills.forEach((connectedId) => {
-      const connectedNode = document.getElementById(`node-${connectedId}`);
-      if (connectedNode && connectedId !== skillId) {
-        connectedNode.classList.add('active');
-      }
-    });
-
-    // Highlight direct connections from center node
-    allConnections.forEach((conn) => {
+    // Activer lignes directes
+    connections.forEach((conn) => {
       if (conn.from === skillId || conn.to === skillId) {
         const selector = `.connection-${conn.from}.connection-${conn.to}`;
         document.querySelectorAll(selector).forEach((line) => {
           line.classList.add('active');
           line.setAttribute('opacity', '0.9');
+          line.setAttribute('stroke-width', '0.7');
         });
       }
     });
-  }
 
-  function clearHighlight(allSkills) {
-    allSkills.forEach((skill) => {
-      const node = document.getElementById(`node-${skill.id}`);
-      if (node) node.classList.remove('active');
-    });
-
-    document.querySelectorAll('.connection').forEach((conn) => {
-      conn.classList.remove('active');
-      conn.setAttribute('opacity', '0.25');
+    // Activer nœuds connectés
+    connectedSkills.forEach((id) => {
+      const n = document.getElementById(`node-${id}`);
+      if (n && id !== skillId) n.classList.add('active');
     });
   }
+
+  function clearHighlight() {
+    skills.forEach((s) => {
+      const n = document.getElementById(`node-${s.id}`);
+      if (n) n.classList.remove('active');
+    });
+    document.querySelectorAll('.connection').forEach((line) => {
+      line.classList.remove('active');
+      line.setAttribute('opacity', '0.25');
+      line.setAttribute('stroke-width', '0.4');
+    });
+  }
+
+  // Redimensionnement : recalculer taille des nœuds si besoin
+  window.addEventListener('resize', () => {
+    const size = getNodeSize();
+    document.querySelectorAll('.skill-node').forEach((n) => {
+      n.style.width  = size + 'px';
+      n.style.height = size + 'px';
+    });
+  });
 }
 
 initConstellation();
@@ -324,51 +295,33 @@ stars.forEach((star) => {
   star.addEventListener('click', () => {
     selectedRating = star.dataset.value;
     stars.forEach((s) => {
-      if (s.dataset.value <= selectedRating) {
-        s.classList.add('active');
-      } else {
-        s.classList.remove('active');
-      }
+      s.classList.toggle('active', s.dataset.value <= selectedRating);
     });
-    console.log('Rating:', selectedRating);
   });
 
   star.addEventListener('mouseover', () => {
     stars.forEach((s) => {
-      if (s.dataset.value <= star.dataset.value) {
-        s.style.color = '#7C3AED';
-      } else {
-        s.style.color = '#ddd';
-      }
+      s.style.color = s.dataset.value <= star.dataset.value ? '#7C3AED' : '#ddd';
     });
   });
 });
 
 document.querySelector('.rating-prompt')?.addEventListener('mouseleave', () => {
   stars.forEach((s) => {
-    if (s.dataset.value <= selectedRating) {
-      s.style.color = '#7C3AED';
-    } else {
-      s.style.color = '#ddd';
-    }
+    s.style.color = s.dataset.value <= selectedRating ? '#7C3AED' : '#ddd';
   });
 });
 
 // ============================================================
-// SMOOTH SCROLL FOR ANCHOR LINKS
+// SMOOTH SCROLL
 // ============================================================
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener('click', function (e) {
     const href = this.getAttribute('href');
     if (href !== '#' && document.querySelector(href)) {
       e.preventDefault();
-      const target = document.querySelector(href);
-      const offset = 80;
-      const top = target.offsetTop - offset;
-      window.scrollTo({
-        top: top,
-        behavior: 'smooth',
-      });
+      const top = document.querySelector(href).offsetTop - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   });
 });
